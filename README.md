@@ -1,3 +1,7 @@
+# Como visualizar o projeto no navegador
+yarn start
+> seleciona "w" no menu do terminal pra abrir a página web, depois é só inspecionar a página e colocar no modo mobile
+
 # Navigation Example
 
 <p>
