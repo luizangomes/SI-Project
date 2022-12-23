@@ -8,6 +8,7 @@ import { useColorScheme } from "react-native";
 import Colors from "../constants/Colors";
 import TabOneScreen from "../screens/TabOneScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
+import HealthAppScreen from "../screens/HealthAppScreen";
 
 const BottomTab = createBottomTabNavigator();
 
@@ -32,6 +33,16 @@ export default function BottomTabNavigator() {
       <BottomTab.Screen
         name="TabTwo"
         component={TabTwoNavigator}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="ios-code" color={color} />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="HealthApp"
+        component={HealthAppNavigator}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
@@ -76,5 +87,19 @@ function TabTwoNavigator() {
         options={{ headerTitle: "Tab Two Title" }}
       />
     </TabTwoStack.Navigator>
+  );
+}
+
+const HealthAppStack = createStackNavigator();
+
+function HealthAppNavigator() {
+  return (
+    <HealthAppStack.Navigator>
+      <HealthAppStack.Screen
+        name="HealthApp"
+        component={HealthAppScreen}
+        options={{ headerTitle: "Health App" }}
+      />
+    </HealthAppStack.Navigator>
   );
 }

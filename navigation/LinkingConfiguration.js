@@ -21,6 +21,11 @@ export default {
               TabTwoScreen: "two",
             },
           },
+          HealthApp: {
+            screens: {
+              HealthAppScreen: "health",
+            },
+          },
         },
       },
       NotFound: "*",
