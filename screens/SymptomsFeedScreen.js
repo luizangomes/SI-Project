@@ -1,24 +1,18 @@
 import { StyleSheet } from "react-native";
 import { ImageBackground } from "react-native-web";
 import { Text, View } from "../components/Themed";
+import React from 'react';
+import { SymptomsFeed } from "../components/SymptomsFeed";
+import { SymptomCard } from "../components/SymptomCard";
 
 const backgroundImage = require("../assets/images/background-image.jpg");
 
-export default function HealthAppScreen() {
+export default function SymptomsFeedScreen() {
     return (
         <View style={styles.backgroundImageContainer}>
             <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.image}>
                 <View style={{ flexDirection: "column", flex: 1, backgroundColor: "rgba(0, 0, 0, 0.35)", }}>
-                    <View style={[styles.startContainer, { flexDirection: "row", flex: 1 }]}>
-                        <Text style={[styles.title, { flex: 1 }]}>Bem{"\n"}Estar</Text>
-                        <View style={[styles.middleHelloUser, { flex: 2 }]}></View>
-                        <Text style={[styles.userNameText, { flex: 3 }]}>
-                            Olá,{"\n"}Usuário
-                        </Text>
-                    </View>
-                    <View style={[styles.symptomsBeta, { flex: 2 }]}>
-                        <Text>Oi :)</Text>
-                    </View>
+                    <SymptomsFeed />
                 </View>
             </ImageBackground >
         </View >

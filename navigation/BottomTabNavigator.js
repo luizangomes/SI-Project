@@ -6,9 +6,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { useColorScheme } from "react-native";
 
 import Colors from "../constants/Colors";
-import TabOneScreen from "../screens/TabOneScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
-import HealthAppScreen from "../screens/HealthAppScreen";
+import HomeScreen from "../screens/HomeScreen";
+import ProfilePageScreen from "../screens/ProfilePageScreen";
+import SymptomsFeedScreen from "../screens/SymptomsFeedScreen";
 
 const BottomTab = createBottomTabNavigator();
 
@@ -21,36 +21,37 @@ export default function BottomTabNavigator() {
       screenOptions={{ tabBarActiveTintColor: Colors[colorScheme].tint }}
     >
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneNavigator}
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
-          ),
-        }}
-      />
-      <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoNavigator}
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
-          ),
-        }}
-      />
-      <BottomTab.Screen
         name="HealthApp"
-        component={HealthAppNavigator}
+        component={HomeNavigator}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
+            <TabBarIcon name="md-home-outline" color={color} />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="FeedSymp"
+        component={SymptomsFeedNavigator}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="ios-medkit-outline" color={color} />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Profile"
+        component={ProfilePageNavigator}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="people-circle" color={color} />
           ),
         }}
       />
     </BottomTab.Navigator>
+
   );
 }
 
@@ -62,44 +63,45 @@ function TabBarIcon(props) {
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator();
 
-function TabOneNavigator() {
+const HomeStack = createStackNavigator();
+
+function HomeNavigator() {
   return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="TabOneScreen"
-        component={TabOneScreen}
-        options={{ headerTitle: "Tab One Title" }}
-      />
-    </TabOneStack.Navigator>
-  );
-}
-
-const TabTwoStack = createStackNavigator();
-
-function TabTwoNavigator() {
-  return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
-        options={{ headerTitle: "Tab Two Title" }}
-      />
-    </TabTwoStack.Navigator>
-  );
-}
-
-const HealthAppStack = createStackNavigator();
-
-function HealthAppNavigator() {
-  return (
-    <HealthAppStack.Navigator>
-      <HealthAppStack.Screen
+    <HomeStack.Navigator>
+      <HomeStack.Screen
         name="HealthApp"
-        component={HealthAppScreen}
+        component={HomeScreen}
         options={{ headerTitle: "Health App" }}
       />
-    </HealthAppStack.Navigator>
+    </HomeStack.Navigator>
+  );
+}
+
+const ProfilePageStack = createStackNavigator();
+
+function ProfilePageNavigator() {
+  return (
+    <ProfilePageStack.Navigator>
+      <ProfilePageStack.Screen
+        name="ProfilePage"
+        component={ProfilePageScreen}
+        options={{ headerTitle: "Meu Perfil" }}
+      />
+    </ProfilePageStack.Navigator>
+  );
+}
+
+const SymptomsFeedStack = createStackNavigator();
+
+function SymptomsFeedNavigator() {
+  return (
+    <SymptomsFeedStack.Navigator>
+      <SymptomsFeedStack.Screen
+        name="SymptomsFeed"
+        component={SymptomsFeedScreen}
+        options={{ headerTitle: "Histórico de Sintomas" }}
+      />
+    </SymptomsFeedStack.Navigator>
   );
 }

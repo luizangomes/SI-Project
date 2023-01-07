@@ -4,29 +4,31 @@
     "slug": "expo-template-tabs",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/medicine-drug-health-medical-smartphone-pharmacy-tablet-2-svgrepo-com.svg",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/medicine-drug-health-medical-smartphone-pharmacy-tablet-2-svgrepo-com.svg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/medicine-drug-health-medical-smartphone-pharmacy-tablet-2-svgrepo-com.svg",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/medicine-drug-health-medical-smartphone-pharmacy-tablet-2-svgrepo-com.svg"
     }
   }
 }

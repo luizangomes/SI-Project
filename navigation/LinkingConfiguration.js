@@ -11,21 +11,21 @@ export default {
     screens: {
       Root: {
         screens: {
-          TabOne: {
-            screens: {
-              TabOneScreen: "one",
-            },
-          },
-          TabTwo: {
-            screens: {
-              TabTwoScreen: "two",
-            },
-          },
           HealthApp: {
             screens: {
-              HealthAppScreen: "health",
+              HealthAppScreen: "home",
             },
           },
+          ProfilePage: {
+            screens: {
+              ProfilePageScreen: "profile",
+            }
+          },
+          SymptomsFeedPage: {
+            screens: {
+              SymptomsFeedScreen: "sympFeed",
+            }
+          }
         },
       },
       NotFound: "*",
