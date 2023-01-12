@@ -48,7 +48,9 @@ const styles = StyleSheet.create({
         marginBottom: 30,
         paddingVertical: 8,
         paddingHorizontal: 10,
-        height: '50%', //tá ajudando agora, mas deve dar erro no futuro, este % reduz o tamanho da caixa
+        height: '15%', // tá ajudando agora, mas deve dar erro no futuro, este % reduz o tamanho da caixa
+                       // Eduardo: Diminuí ainda mais pra ajustar o tamanho do plano de fundo, mas ainda não tá bom.
+                       //          O ajuste continua variando conforme o dispositivo.
     },
     startContainer: {
         flex: 1,
