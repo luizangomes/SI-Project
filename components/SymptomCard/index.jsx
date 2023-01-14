@@ -2,11 +2,11 @@ import { Text, View } from "../Themed";
 import { StyleSheet } from "react-native";
 import React from 'react';
 
-export function SymptomCard({ name, date, time, report }) {
+export function SymptomCard({ medication, date, time, report }) {
     return (
         <div>
             <View style={styles.cardBackground}>
-                <Text style={styles.downText}>{name} {date} {time}</Text>
+                <Text style={styles.upText}>{medication} {date} {time}</Text>
                 <Text style={styles.downText}>{report}{"\n"}</Text>
             </View>
         </div>
@@ -15,10 +15,12 @@ export function SymptomCard({ name, date, time, report }) {
 
 const styles = StyleSheet.create({
     upText: {
-        fontSize: 20,
+        textAlign: 'right',
+        fontSize: 15,
     },
 
     downText: {
+        textAlign: 'left',
         fontSize: 15,
     },
 

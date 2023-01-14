@@ -1,11 +1,14 @@
-import { StyleSheet, Button, TextInput, Modal } from "react-native";
+import { StyleSheet, TextInput } from "react-native";
+import { Button } from "react-native-elements";
 import { Text, View } from "../Themed";
 import React, { useState } from 'react';
 import { SymptomCard } from "../SymptomCard";
+import Modal from "react-native-modal";
+import { Ionicons } from '@expo/vector-icons';
 
 export function SymptomsFeed() {
     const [symptoms, setSymptoms] = useState([]);
-    const [userName, setUserName] = useState();
+    const [userMedication, setMedication] = useState();
     const [userReport, setUserReport] = useState();
 
     const [isPopUpAddSymptomsVisible, setIsPopUpAddSymptomsVisible] = useState(false);
@@ -14,67 +17,69 @@ export function SymptomsFeed() {
 
     function handleAddSymptom() {
         const newSymptoms = {
-            name: userName,
+            medication: userMedication,
             report: userReport,
             date: new Date().toLocaleDateString("pt-br"),
             time: new Date().toLocaleTimeString("pt-br", {
                 hour: '2-digit',
                 minute: '2-digit',
-                second: '2-digit',
             })
         };
         setSymptoms(prevState => [...prevState, newSymptoms]);
     }
 
     return (
-        <div className='symptomsFeed'>
-            <View style={styles.symptomsBeta}>
-                <Text>Lista de Relatos</Text>
+        <View style={{ height: '100%', justifyContent: "flex-end", flexDirection: "column", flex: 1, backgroundColor: "rgba(0, 0, 0, 0)" }}>
+            <Text style={[styles.titleInPages, { flex: 1 }]}>Histórico De{"\n"}Sintomas</Text>
+            <View style={[styles.symptomsFeedMain, { flex: 2 }]}>
                 {
                     symptoms.map(symptom =>
                         <SymptomCard
                             key={symptom.time}
-                            name={symptom.name}
+                            medication={symptom.medication}
                             date={symptom.date}
                             time={symptom.time}
                             report={symptom.report}
                         />
                     )}
             </View>
-            <View style={styles.symptomsBeta}>
-                <>
-                    <Text>Escreva aqui o relato que quer adicionar:</Text>
-                    <TextInput
-                        placeholder="Nome..."
-                        onChange={e => setUserName(e.target.value)}
-                    />
-                    <TextInput
-                        type="text"
-                        placeholder="Relato..."
-                        onChange={e => setUserReport(e.target.value)}
-                    />
-                    <Button onPress={handleAddSymptom}>Adicionar</Button>
-                </>
-            </View >
-            {/*<Button title="button" onPress={handlePopUpAddSymptoms} />
-             <Modal isVisible={isPopUpAddSymptomsVisible}>
+            <View style={{ width: '100%', flex: 1, flexDirection: "row-reverse", backgroundColor: "rgba(0, 0, 0, 0)" }}>
+                <Button icon={<Ionicons name="checkmark-circle-outline" size={55} color="white" />} onPress={handlePopUpAddSymptoms} type="clear" />
+            </View>
+            <Modal isVisible={isPopUpAddSymptomsVisible}>
                 <View style={styles.symptomsBeta}>
                     <>
-                        <Text>Escreva aqui o relato que quer adicionar:</Text>
-                        <TextInput
-                            placeholder="Nome..."
-                            onChange={e => setUserName(e.target.value)}
-                        />
+                        <View style={{ flexDirection: "row-reverse", flex: 1, backgroundColor: "rgba(0, 0, 0, 0)" }}>
+                            <View style={{ width: "10%", flex: 1, flexDirection: "row-reverse", backgroundColor: "rgba(0, 0, 0, 0)" }}>
+                                <Button color="rgba(0, 0, 0, 0)" icon={<Ionicons name="close-sharp" size={40} color="white" />} onPress={handlePopUpAddSymptoms} type="clear" />
+                            </View>
+                            <View style={styles.spaceButtonX} />
+                            <Text style={styles.addTitlePopUp}>Novo relato de{"\n"}sintoma</Text>
+                        </View>
+                        <View style={styles.spaceTitleFields} />
+                        <Text>Medicamento relacionado</Text>
                         <TextInput
                             type="text"
-                            placeholder="Relato..."
+                            style={{ borderRadius: 15, backgroundColor: "rgba(255, 255, 255, 0.6)" }}
+                            onChange={e => setMedication(e.target.value)}
+                        />
+                        <View style={styles.spaceFields} />
+                        <Text>Relato</Text>
+                        <TextInput
+                            style={{ borderRadius: 15, backgroundColor: "rgba(255, 255, 255, 0.6)" }}
+                            type="text"
+                            multiline
+                            numberOfLines={5}
                             onChange={e => setUserReport(e.target.value)}
                         />
-                        <Button onPress={handleAddSymptom}>Adicionar</Button>
+                        <View style={styles.spaceTitleFields} />
+                        <View style={{ width: '100%', flex: 1, flexDirection: "row-reverse", backgroundColor: "rgba(0, 0, 0, 0)" }}>
+                            <Button icon={<Ionicons name="checkmark-circle-outline" size={55} color="white" />} onPress={handleAddSymptom} type="clear" />
+                        </View>
                     </>
                 </View >
-            </Modal> */}
-        </div>
+            </Modal>
+        </View >
     );
 }
 
@@ -82,46 +87,51 @@ const styles = StyleSheet.create({
     backgroundImageContainer: {
         flex: 1,
     },
-    title: {
-        fontSize: 65,
-        textAlign: "center",
-        color: "#1F7C6C",
-        fontWeight: "bold",
-        fontFamily: 'SeoulHangang CBL',
+    spaceButtonX: {
+        padding: 5,
+        backgroundColor: 'rgba(0, 0, 0, 0.00)',
     },
-    userNameText: {
-        fontSize: 32.5,
-        textAlign: "center",
-        color: "black",
-        fontWeight: "bold",
-        fontFamily: 'SeoulHangang CBL',
-        borderRadius: 20,
-        backgroundColor: " rgba(77, 194, 173, 0.73)",
-        marginRight: 30,
-        marginLeft: 30,
-        marginTop: 30,
-        marginBottom: 30,
-        paddingVertical: 8,
-        paddingHorizontal: 10,
-        height: '50%', //tá ajudando agora, mas deve dar erro no futuro, este % reduz o tamanho da caixa
+    spaceTitleFields: {
+        padding: 10,
+        backgroundColor: 'rgba(0, 0, 0, 0.00)',
+    },
+    spaceFields: {
+        padding: 5,
+        backgroundColor: 'rgba(0, 0, 0, 0.00)',
     },
     startContainer: {
         flex: 1,
-        padding: 30,
         backgroundColor: 'rgba(0, 0, 0, 0.00)',
     },
-    middleHelloUser: {
-        padding: 0.1,
-        backgroundColor: 'rgba(0, 0, 0, 0.00)',
+    addTitlePopUp: {
+        fontSize: 25,
+        textAlign: 'center',
+        paddingHorizontal: 25,
+    },
+    titleInPages: {
+        fontSize: 40,
+        textAlign: "center",
+        color: "#FFF",
+        fontWeight: "bold",
+        fontFamily: 'SeoulHangang CBL',
+        flex: 1,
+        padding: 30,
     },
     symptomsBeta: {
         borderRadius: 20,
-        marginRight: 30,
-        marginLeft: 30,
-        marginTop: 30,
-        marginBottom: 30,
-        paddingVertical: 8,
-        paddingHorizontal: 10,
+        margin: 10,
+        padding: 10,
+        width: 325,
+        height: 350,
+        backgroundColor: " rgba(77, 194, 173, 0.73)",
+    },
+    symptomsFeedMain: {
+        borderRadius: 20,
+        margin: 20,
+        padding: 10,
+        justifyContent: 'flex-start',
+        alignSelf: 'stretch',
+        height: 'stretch',
         backgroundColor: " rgba(77, 194, 173, 0.73)",
     },
     separator: {
