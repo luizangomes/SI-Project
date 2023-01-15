@@ -57,22 +57,21 @@ export function SymptomsFeed() {
                             <Text style={styles.addTitlePopUp}>Novo relato de{"\n"}sintoma</Text>
                         </View>
                         <View style={styles.spaceTitleFields} />
-                        <Text>Medicamento relacionado</Text>
+                        <Text style={{ fontSize: 18 }}>Medicamento relacionado</Text>
                         <TextInput
                             type="text"
-                            style={{ borderRadius: 15, backgroundColor: "rgba(255, 255, 255, 0.6)" }}
+                            style={{ borderRadius: 10, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 18 }}
                             onChange={e => setMedication(e.target.value)}
                         />
                         <View style={styles.spaceFields} />
-                        <Text>Relato</Text>
+                        <Text style={{ fontSize: 18 }}>Relato</Text>
                         <TextInput
-                            style={{ borderRadius: 15, backgroundColor: "rgba(255, 255, 255, 0.6)" }}
+                            style={{ borderRadius: 10, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 18 }}
                             type="text"
                             multiline
                             numberOfLines={5}
                             onChange={e => setUserReport(e.target.value)}
                         />
-                        <View style={styles.spaceTitleFields} />
                         <View style={{ width: '100%', flex: 1, flexDirection: "row-reverse", backgroundColor: "rgba(0, 0, 0, 0)" }}>
                             <Button icon={<Ionicons name="checkmark-circle-outline" size={55} color="white" />} onPress={handleAddSymptom} type="clear" />
                         </View>
@@ -121,8 +120,8 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         margin: 10,
         padding: 10,
-        width: 325,
-        height: 350,
+        width: '95%',
+        height: '55%',
         backgroundColor: " rgba(77, 194, 173, 0.73)",
     },
     symptomsFeedMain: {
