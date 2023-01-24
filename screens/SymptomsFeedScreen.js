@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { ImageBackground } from "react-native-web";
+import { ImageBackground, ScrollView } from "react-native-web";
 import { Text, View } from "../components/Themed";
 import React from 'react';
 import { SymptomsFeed } from "../components/SymptomsFeed";
@@ -10,9 +10,9 @@ export default function SymptomsFeedScreen() {
     return (
         <View style={styles.backgroundImageContainer}>
             <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.image}>
-                <View style={{ width: '100%', height: '100%', flex: 1, flexDirection: "column", justifyContent: "flex-end", backgroundColor: "rgba(0, 0, 0, 0.35)", alignItems: "stretch" }}>
+                <ScrowView style={{ width: '100%', height: '100%', flex: 1, flexDirection: "column", justifyContent: "flex-end", backgroundColor: "rgba(0, 0, 0, 0.35)", alignItems: "stretch" }}>
                     <SymptomsFeed style={{ position: "relative", flex: 2 }} />
-                </View>
+                </ScrowView>
             </ImageBackground >
         </View >
     );

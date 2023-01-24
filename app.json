@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "siproject",
-    "slug": "expo-template-tabs",
+    "slug": "si-project",
     "version": "1.0.0",
     "orientation": "portrait",
     "scheme": "myapp",
@@ -24,6 +24,12 @@
         "backgroundColor": "#ffffff"
       }
     },
-    "web": {}
+    "web": {},
+    "extra": {
+      "eas": {
+        "projectId": "4a262e20-b65c-4e4f-b2eb-02520bc103c8"
+      }
+    },
+    "owner": "luizangomes"
   }
 }
