@@ -60,7 +60,7 @@ export function SymptomsFeed() {
             <View style={{ width: '100%', paddingBottom: "2.5%", justifyContent: 'flex-start', flexDirection: "row-reverse", backgroundColor: "rgba(0, 0, 0, 0)" }}>
                 <Button icon={<Ionicons name="checkmark-circle-outline" size={55} color="rgba(0, 255,209, 1)" />} onPress={handlePopUpAddSymptoms} type="clear" />
             </View>
-            <Modal isVisible={isPopUpAddSymptomsVisible}>
+            <Modal isVisible={isPopUpAddSymptomsVisible} style={{ width: '100 %', height: '100%' }}>
                 <View style={styles.symptomsModalBox}>
                     <>
                         <View style={{ padding: "10%", justifyContent: 'flex-start', flexDirection: "row-reverse", flex: 1, backgroundColor: "rgba(0, 0, 0, 0)" }}>
@@ -135,14 +135,14 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         margin: '2.5%',
         padding: 10,
-        width: '95%',
+        width: '100%',
         height: '60%',
         backgroundColor: " rgba(77, 194, 173, 0.73)",
     },
     symptomsFeedScroll: {
         borderRadius: 20,
         margin: '5%',
-        padding: 10,
+        padding: '5%',
         width: '90%',
         height: '100%',
         backgroundColor: "rgba(77, 194, 173, 0.75)",
