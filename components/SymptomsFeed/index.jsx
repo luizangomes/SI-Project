@@ -1,10 +1,12 @@
 import { StyleSheet, TextInput } from "react-native";
 import { Button } from "react-native-elements";
+import { ScrollView } from "react-native-web";
 import { Text, View } from "../Themed";
 import React, { useState } from 'react';
 import { SymptomCard } from "../SymptomCard";
 import Modal from "react-native-modal";
 import { Ionicons } from '@expo/vector-icons';
+import { set } from "react-native-reanimated";
 
 export function SymptomsFeed() {
     const [symptoms, setSymptoms] = useState([]);
@@ -26,12 +28,15 @@ export function SymptomsFeed() {
             })
         };
         setSymptoms(prevState => [...prevState, newSymptoms]);
+        setMedication("");
+        setUserReport("");
+        handlePopUpAddSymptoms();
     }
 
     return (
-        <View style={{ height: '100%', justifyContent: "flex-end", flexDirection: "column", flex: 1, backgroundColor: "rgba(0, 0, 0, 0)" }}>
-            <Text style={[styles.titleInPages, { flex: 1 }]}>Histórico De{"\n"}Sintomas</Text>
-            <View style={[styles.symptomsFeedMain, { flex: 2 }]}>
+        <View style={{ height: '100%', alignContent: 'flex-end', justifyContent: "flex-end", flexDirection: "column", backgroundColor: "rgba(0, 0, 0, 0)" }}>
+            <Text style={[styles.titleInPages]}>Histórico De{"\n"}Sintomas</Text>
+            <ScrollView style={[styles.symptomsFeedScroll]}>
                 {
                     symptoms.map(symptom =>
                         <SymptomCard
@@ -42,42 +47,41 @@ export function SymptomsFeed() {
                             report={symptom.report}
                         />
                     )}
-            </View>
-            <View style={{ width: '100%', flex: 1, flexDirection: "row-reverse", backgroundColor: "rgba(0, 0, 0, 0)" }}>
-                <Button icon={<Ionicons name="checkmark-circle-outline" size={55} color="white" />} onPress={handlePopUpAddSymptoms} type="clear" />
+            </ScrollView>
+            <View style={{ width: '100%', paddingBottom: "2.5%", justifyContent: 'flex-start', flexDirection: "row-reverse", backgroundColor: "rgba(0, 0, 0, 0)" }}>
+                <Button icon={<Ionicons name="checkmark-circle-outline" size={55} color="rgba(0, 255,209, 1)" />} onPress={handlePopUpAddSymptoms} type="clear" />
             </View>
             <Modal isVisible={isPopUpAddSymptomsVisible}>
-                <View style={styles.symptomsBeta}>
+                <View style={styles.symptomsModalBox}>
                     <>
-                        <View style={{ flexDirection: "row-reverse", flex: 1, backgroundColor: "rgba(0, 0, 0, 0)" }}>
-                            <View style={{ width: "10%", flex: 1, flexDirection: "row-reverse", backgroundColor: "rgba(0, 0, 0, 0)" }}>
+                        <View style={{ padding: "10%", justifyContent: 'flex-start', flexDirection: "row-reverse", flex: 1, backgroundColor: "rgba(0, 0, 0, 0)" }}>
+                            <View style={{ paddingHorizontal: "5%", width: "10%", flex: 1, flexDirection: "row-reverse", backgroundColor: "rgba(0, 0, 0, 0)" }}>
                                 <Button color="rgba(0, 0, 0, 0)" icon={<Ionicons name="close-sharp" size={40} color="white" />} onPress={handlePopUpAddSymptoms} type="clear" />
                             </View>
-                            <View style={styles.spaceButtonX} />
-                            <Text style={styles.addTitlePopUp}>Novo relato de{"\n"}sintoma</Text>
+                            <Text style={styles.addTitlePopUp}>Novo relato{"\n"}de sintoma</Text>
                         </View>
                         <View style={styles.spaceTitleFields} />
                         <Text style={{ fontSize: 18 }}>Medicamento relacionado</Text>
                         <TextInput
                             type="text"
-                            style={{ borderRadius: 10, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 18 }}
+                            style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
                             onChange={e => setMedication(e.target.value)}
                         />
                         <View style={styles.spaceFields} />
                         <Text style={{ fontSize: 18 }}>Relato</Text>
                         <TextInput
-                            style={{ borderRadius: 10, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 18 }}
+                            style={{ borderRadius: 10, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
                             type="text"
                             multiline
                             numberOfLines={5}
                             onChange={e => setUserReport(e.target.value)}
                         />
-                        <View style={{ width: '100%', flex: 1, flexDirection: "row-reverse", backgroundColor: "rgba(0, 0, 0, 0)" }}>
+                        <View style={{ width: '100%', paddingBottom: 10, flex: 1, flexDirection: "row-reverse", backgroundColor: "rgba(0, 255, 209, 0)" }}>
                             <Button icon={<Ionicons name="checkmark-circle-outline" size={55} color="white" />} onPress={handleAddSymptom} type="clear" />
                         </View>
                     </>
                 </View >
-            </Modal>
+            </Modal >
         </View >
     );
 }
@@ -108,21 +112,31 @@ const styles = StyleSheet.create({
         paddingHorizontal: 25,
     },
     titleInPages: {
-        fontSize: 40,
+        fontSize: 45,
         textAlign: "center",
         color: "#FFF",
         fontWeight: "bold",
         fontFamily: 'SeoulHangang CBL',
         flex: 1,
-        padding: 30,
+        paddingTop: 50,
+        paddingBottom: 20,
+
     },
-    symptomsBeta: {
+    symptomsModalBox: {
         borderRadius: 20,
-        margin: 10,
+        margin: '2.5%',
         padding: 10,
         width: '95%',
-        height: '55%',
+        height: '60%',
         backgroundColor: " rgba(77, 194, 173, 0.73)",
+    },
+    symptomsFeedScroll: {
+        borderRadius: 20,
+        margin: '5%',
+        padding: 10,
+        width: '90%',
+        height: '100%',
+        backgroundColor: "rgba(77, 194, 173, 0.75)",
     },
     symptomsFeedMain: {
         borderRadius: 20,

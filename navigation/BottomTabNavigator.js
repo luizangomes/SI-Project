@@ -86,7 +86,7 @@ function ProfilePageNavigator() {
       <ProfilePageStack.Screen
         name="ProfilePage"
         component={ProfilePageScreen}
-        options={{ headerTitle: "Meu Perfil" }}
+        options={{ headerTitle: "Meu Perfil", headerShown: false }}
       />
     </ProfilePageStack.Navigator>
   );
@@ -100,7 +100,7 @@ function SymptomsFeedNavigator() {
       <SymptomsFeedStack.Screen
         name="SymptomsFeed"
         component={SymptomsFeedScreen}
-        options={{ headerTitle: "Histórico de Sintomas" }}
+        options={{ headerTitle: "Histórico de Sintomas", headerShown: false }}
       />
     </SymptomsFeedStack.Navigator>
   );
