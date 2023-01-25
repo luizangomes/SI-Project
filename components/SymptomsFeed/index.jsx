@@ -10,27 +10,36 @@ import { set } from "react-native-reanimated";
 
 export function SymptomsFeed() {
     const [symptoms, setSymptoms] = useState([]);
-    const [userMedication, setMedication] = useState();
-    const [userReport, setUserReport] = useState();
+    const [userMedication, setMedication] = useState('');
+    const [userReport, setUserReport] = useState('');
 
     const [isPopUpAddSymptomsVisible, setIsPopUpAddSymptomsVisible] = useState(false);
 
     const handlePopUpAddSymptoms = () => setIsPopUpAddSymptomsVisible(() => !isPopUpAddSymptomsVisible);
 
     function handleAddSymptom() {
-        const newSymptoms = {
-            medication: userMedication,
-            report: userReport,
-            date: new Date().toLocaleDateString("pt-br"),
-            time: new Date().toLocaleTimeString("pt-br", {
-                hour: '2-digit',
-                minute: '2-digit',
-            })
-        };
-        setSymptoms(prevState => [...prevState, newSymptoms]);
-        setMedication("");
-        setUserReport("");
-        handlePopUpAddSymptoms();
+        const checkTextInput = () => {
+            if (!userReport.trim()) {
+                alert("Espaço de Relato está vazio!");
+                return;
+            }
+            else {
+                const newSymptoms = {
+                    medication: userMedication,
+                    report: userReport,
+                    date: new Date().toLocaleDateString("pt-br"),
+                    time: new Date().toLocaleTimeString("pt-br", {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                    })
+                };
+                setSymptoms(prevState => [...prevState, newSymptoms]);
+                setMedication("");
+                setUserReport("");
+                handlePopUpAddSymptoms();
+            }
+        }
+        checkTextInput();
     }
 
     return (
