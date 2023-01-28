@@ -7,8 +7,6 @@ Ver também o comentário de "Stanisław Jarocki"
 Falta colocar cor de foco (linha 45 em diante).
 */
 
-
-
 import * as React from 'react';
 import { View, Text, Image } from 'react-native-web';
 
@@ -20,6 +18,9 @@ import HomeScreen from "../screens/HomeScreen";
 import ProfilePageScreen from "../screens/ProfilePageScreen";
 import PlaceholderScreen from "../screens/PlaceholderScreen";
 import SymptomsFeedScreen from "../screens/SymptomsFeedScreen";
+import MedicineFeedScreen from "../screens/MedicineFeedScreen";
+import AddMedicineScreen from '../screens/AddMedicineScreen';
+import StartScreen from '../screens/StartScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -31,7 +32,7 @@ export default function BottomTabNavigator(){
         tabBarShowLabel: false,
         tabBarStyle: {
           position: 'absolute',
-          bottom: 25,
+          bottom: 0,
           left: 20,
           right: 20,
           elevation: 0,
@@ -41,8 +42,9 @@ export default function BottomTabNavigator(){
         }
       }}
 
-      initialRouteName = 'HomeScreen'
+      initialRouteName = 'Home'
     > 
+      
       <Tab.Screen name = "Perfil" component = {ProfilePageScreen}
       options = {{
         tabBarIcon: () => (
@@ -60,6 +62,8 @@ export default function BottomTabNavigator(){
             />
           </View>
         ),
+
+        headerShown: false,
       }}
       />
 
@@ -80,6 +84,8 @@ export default function BottomTabNavigator(){
                   />
                 </View>
               ),
+
+              headerShown: false,
             }}
       />
 
@@ -97,10 +103,12 @@ export default function BottomTabNavigator(){
                   />
                 </View>
               ),
+
+              headerShown: false,
             }}
       />
 
-      <Tab.Screen name = "Remédios" component = {PlaceholderScreen}
+      <Tab.Screen name = "Remédios" component = {MedicineFeedScreen}
             options = {{
               tabBarIcon: () => (
                 <View style = {{alignItems: 'center', justifyContent: 'center', top: 0}}>
@@ -117,6 +125,9 @@ export default function BottomTabNavigator(){
                   />
                 </View>
               ),
+
+              headerShown: false,
+
             }}
       />
 
@@ -137,6 +148,9 @@ export default function BottomTabNavigator(){
                   />
                 </View>
               ),
+
+              headerShown: false,
+
             }}
       />
 

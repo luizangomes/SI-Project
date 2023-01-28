@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { ImageBackground, ScrollView } from "react-native-web";
 import { Text, View } from "../components/Themed";
 import React from 'react';
-import { SymptomsFeed } from "../components/SymptomsFeed";
+import { MedicineFeed } from "../components/MedicineFeed";
 
 const backgroundImage = require("../assets/images/background-image.jpg");
 
@@ -11,7 +11,7 @@ export default function MedicineFeedScreen() {
         <View style={styles.backgroundImageContainer}>
             <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.image}>
                 <View style={{ width: '100%', height: '100%', flex: 1, flexDirection: "column", justifyContent: "flex-end", backgroundColor: "rgba(0, 0, 0, 0.35)", alignItems: "stretch" }}>
-                    <SymptomsFeed style={{ flex: 1 }} />
+                    <MedicineFeed style={{ flex: 1 }} />
                 </View>
             </ImageBackground >
         </View >

@@ -2,11 +2,28 @@ import { Text, View } from "../Themed";
 import { StyleSheet } from "react-native";
 import React from 'react';
 
-export function MedicineCard({ nome, dose, estoque }) {
+// Cartão mostrado na tela de remédios.
+export function MedicineCard({ nome, dose, estoque, dataInicio, dataFim, horario }) {
     return (
         <div>
             <View style={styles.cardBackground}>
-                <Text style={styles.downText}>{nome}{" | "}{dose}{" | "}{estoque}{" comprimidos"}</Text>
+                <Text style={styles.downText}>
+                    {nome}{" | "}{dose}{" | "}{estoque}{" comprimidos\nInicio: "}{dataInicio}{" | "}
+                    {"Fim: "}{dataFim}{" | "}{"Horário: "}{horario}{"."}
+                </Text>
+            </View>
+        </div>
+    );
+}
+
+// Cartão mostrado no feed da home.
+export function MiniMedicineCard({nome, dose, estoque}){
+    return (
+        <div>
+            <View style={styles.cardBackground}>
+                <Text style={styles.downText}>
+                    {nome}{" | "}{dose}{" | "}{estoque}{" comprimidos"}
+                </Text>
             </View>
         </div>
     );
