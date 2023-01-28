@@ -11,9 +11,14 @@ export default {
     screens: {
       Root: {
         screens: {
-          HealthApp: {
+          StartPage : {
             screens: {
-              HealthAppScreen: "home",
+              StartScreen: "Start",
+            },
+          },
+          HomePage: {
+            screens: {
+              HomeScreen: "Home",
             },
           },
           ProfilePage: {

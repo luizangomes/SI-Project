@@ -1,75 +1,77 @@
 import { StyleSheet } from "react-native";
 import { ImageBackground } from "react-native-web";
 import { Text, View } from "../components/Themed";
+import { ScrollView } from "react-native-web";
 import React from 'react';
+import { SymptomCard } from "../components/SymptomCard";
+import { MiniMedicineCard } from "../components/MedicineCard";
 
 const backgroundImage = require("../assets/images/background-image.jpg");
 
 export default function HomeScreen() {
     return (
-        <>
-            <View style={styles.backgroundImageContainer}>
-                <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.image}>
-                    <View style={{ flexDirection: "column", flex: 0.2, backgroundColor: "rgba(0, 0, 0, 0.35)", }}>
-                        <View style={[styles.startContainer, { flexDirection: "row", flex: 1 }]}>
-                            <Text style={[styles.title, { flex: 1 }]}>Bem{"\n"}Estar</Text>
-                            <View style={[styles.middleHelloUser, { flex: 2 }]}></View>
-                            <Text style={[styles.userNameText, { flex: 3 }]}>
-                                Olá,{"\n"}Usuário
-                            </Text>
-                        </View>
+        <View style={styles.backgroundImageContainer}>
+            <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.image}>
+                <View style={{ flexDirection: "column", flex: 0.2, backgroundColor: "rgba(0, 0, 0, 0.35)", }}>
+                    <View style={[styles.startContainer, { flexDirection: "row", flex: 1 }]}>
+                        <Text style={[styles.title, { flex: 1 }]}>Bem{"\n"}Estar</Text>
+                        <View style={[styles.middleHelloUser, { flex: 2 }]}></View>
+                        <Text style={[styles.userNameText, { flex: 3 }]}>
+                            Olá,{"\n"}Usuário
+                        </Text>
+                    </View>
+                </View>
+
+                <View style={{ flexDirection: "column", flex: 0.4, backgroundColor: "rgba(0, 0, 0, 0.35)", }}>
+                    <View style = {[styles.symptomsBeta, {height: '70%'}]}>
+                        <Text style = {styles.aba}>Sintomas</Text>
+                        <ScrollView style = {{backgroundColor: "rgba(0, 0, 0, 0)"}} >
+                            <SymptomCard
+                                name = {"Teste 1"}
+                                date = {"11/12/2022"}
+                                time = {"10:49"}
+                                report = {"Febre, dor de cabeça e dor de garganta"}
+                            />
+                            <Text>{"\n"}</Text>
+                            <SymptomCard
+                                name = {"Teste 2"}
+                                date = {"10/12/2022"}
+                                time = {"11:11"}
+                                report = {"Febre, dor de cabeça, dor de garganta e dor de barriga"}                                    
+                            />
+                            <Text>{"\n"}</Text>
+                            <SymptomCard
+                                name = {"Teste 3"}
+                                date = {"10/12/2022"}
+                                time = {"11:11"}
+                                report = {"Febre, dor de cabeça, dor de garganta e dor de barriga"}                                    
+                            />
+                            <Text>{"\n"}</Text>
+                            <SymptomCard
+                                name = {"Teste 4"}
+                                date = {"10/12/2022"}
+                                time = {"11:11"}
+                                report = {"Febre, dor de cabeça, dor de garganta e dor de barriga"}                                    
+                            />
+                        </ScrollView>
                     </View>
 
-                    <View style={{ flexDirection: "column", flex: 0.4, backgroundColor: "rgba(0, 0, 0, 0.35)", }}>
-                        <View style = {[styles.symptomsBeta, {height: '80%'}]}>
-                            <Text style = {styles.aba}>Sintomas</Text>
-                            <View style = {[
-                                    styles.symptomsBeta, {
-                                        height: '25%',
-                                        width: '90%',
-                                        marginLeft: 10,
-                                        backgroundColor: "#586B68"
-                                }
-                                ]}>
-                                    <Text style = {styles.symptomstext}>
-                                        Registro do Dia 11/12/2022 10:49
-                                    </Text>
-                                    <Text style = {[styles.symptomstext, {
-                                        fontWeight: "normal",
-                                        textAlign: "left"}]}>
-                                        Febre, Dor de Cabeça, Dor de Garganta
-                                    </Text>
-                            </View>
-
-                            <View style = {[
-                                    styles.symptomsBeta, {
-                                        height: '25%',
-                                        width: '90%',
-                                        marginLeft: 10,
-                                        backgroundColor: "#586B68"
-                                    }
-                                ]}>
-                                   <Text style = {styles.symptomstext}>
-                                        Registro do Dia 10/12/2022 11:11
-                                    </Text>
-                                    <Text style = {[styles.symptomstext, {
-                                        fontWeight: "normal",
-                                        textAlign: "left"}]}>
-                                        Febre, Dor de Cabeça, Dor de Garganta, Dor de Barriga
-                                    </Text> 
-                            </View>
-                        </View>
-
+                </View>
+                <View style={{ flexDirection: "column", flex: 0.4, backgroundColor: "rgba(0, 0, 0, 0.35)", }}>
+                    <View style = {[styles.symptomsBeta, {height: '70%', bottom: "15%"}]}>
+                        <Text style = {styles.aba}>Remédios</Text>
+                        <ScrollView style = {{backgroundColor: "rgba(0, 0, 0, 0)"}} >
+                            <MiniMedicineCard
+                                nome = {"Dipirona 1mg"}
+                                dose = {"2x/dia"}
+                                estoque = {"5"}
+                            />
+                        </ScrollView>
                     </View>
-                    <View style={{ flexDirection: "column", flex: 0.4, backgroundColor: "rgba(0, 0, 0, 0.35)", }}>
-                        <View style = {[styles.symptomsBeta, {height: '80%'}]}>
-                            <Text style = {styles.aba}>Remédios</Text>
-                        </View>
-                    </View>
+                </View>
 
-                </ImageBackground >
-            </View >
-        </>        
+            </ImageBackground >
+        </View >     
     );
 }
 
