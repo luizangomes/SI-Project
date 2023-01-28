@@ -40,16 +40,6 @@ export default function BottomTabNavigator() {
           ),
         }}
       />
-      <BottomTab.Screen
-        name="Profile"
-        component={ProfilePageNavigator}
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="people-circle" color={color} />
-          ),
-        }}
-      />
     </BottomTab.Navigator>
 
   );
@@ -72,23 +62,9 @@ function HomeNavigator() {
       <HomeStack.Screen
         name="HealthApp"
         component={HomeScreen}
-        options={{ headerTitle: "Health App" }}
+        options={{ headerTitle: "Health App", BottomTab: 'false' }}
       />
     </HomeStack.Navigator>
-  );
-}
-
-const ProfilePageStack = createStackNavigator();
-
-function ProfilePageNavigator() {
-  return (
-    <ProfilePageStack.Navigator>
-      <ProfilePageStack.Screen
-        name="ProfilePage"
-        component={ProfilePageScreen}
-        options={{ headerTitle: "Meu Perfil", headerShown: false }}
-      />
-    </ProfilePageStack.Navigator>
   );
 }
 
@@ -102,6 +78,6 @@ function SymptomsFeedNavigator() {
         component={SymptomsFeedScreen}
         options={{ headerTitle: "Histórico de Sintomas", headerShown: false }}
       />
-    </SymptomsFeedStack.Navigator>
+    </ SymptomsFeedStack.Navigator>
   );
 }

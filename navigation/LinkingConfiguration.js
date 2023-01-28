@@ -9,17 +9,21 @@ export default {
   prefixes: [Linking.createURL("/")],
   config: {
     screens: {
+      Start: {
+        screens: {
+          StartPage: {
+            screens: {
+              StartScreen: "start",
+            }
+          },
+        }
+      },
       Root: {
         screens: {
           HealthApp: {
             screens: {
               HealthAppScreen: "home",
             },
-          },
-          ProfilePage: {
-            screens: {
-              ProfilePageScreen: "profile",
-            }
           },
           SymptomsFeedPage: {
             screens: {

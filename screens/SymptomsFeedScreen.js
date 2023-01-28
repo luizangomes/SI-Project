@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { ImageBackground, ScrollView } from "react-native-web";
+import { ImageBackground } from "react-native-web";
 import { Text, View } from "../components/Themed";
 import React from 'react';
 import { SymptomsFeed } from "../components/SymptomsFeed";

@@ -6,16 +6,26 @@ import React, { useState } from 'react';
 import { SymptomCard } from "../SymptomCard";
 import Modal from "react-native-modal";
 import { Ionicons } from '@expo/vector-icons';
-import { set } from "react-native-reanimated";
+import api from "../../services/api"
+import { useEffect } from "react";
 
 export function SymptomsFeed() {
     const [symptoms, setSymptoms] = useState([]);
+    const [apiSymptoms, setApiSymptoms] = useState([]);
     const [userMedication, setMedication] = useState('');
     const [userReport, setUserReport] = useState('');
 
     const [isPopUpAddSymptomsVisible, setIsPopUpAddSymptomsVisible] = useState(false);
 
     const handlePopUpAddSymptoms = () => setIsPopUpAddSymptomsVisible(() => !isPopUpAddSymptomsVisible);
+
+    function handleAddAPISymptoms() {
+        useEffect(() => {
+            api.fetch("/reports")
+                .then((res) => res.json())
+                .then((data) => setData(data.message));
+        }, []);
+    }
 
     function handleAddSymptom() {
         const checkTextInput = () => {
@@ -57,8 +67,23 @@ export function SymptomsFeed() {
                         />
                     )}
             </ScrollView>
+            <ScrollView style={[styles.symptomsFeedScroll]}>
+                {
+                    apiSymptoms.map(symptom =>
+                        <SymptomCard
+                            key={apiSymptoms?.id}
+                            medication={apiSymptoms?.medication}
+                            date={apiSymptoms?.createdAt}
+                            time={''}
+                            report={apiSymptoms?.content}
+                        />
+                    )}
+            </ScrollView>
             <View style={{ width: '100%', paddingBottom: "2.5%", justifyContent: 'flex-start', flexDirection: "row-reverse", backgroundColor: "rgba(0, 0, 0, 0)" }}>
                 <Button icon={<Ionicons name="checkmark-circle-outline" size={55} color="rgba(0, 255,209, 1)" />} onPress={handlePopUpAddSymptoms} type="clear" />
+            </View>
+            <View style={{ width: '100%', paddingBottom: "2.5%", justifyContent: 'flex-start', flexDirection: "row-reverse", backgroundColor: "rgba(0, 0, 0, 0)" }}>
+                <Button icon={<Ionicons name="checkmark-circle-outline" size={55} color="rgba(0, 255,209, 1)" />} onPress={handleAddAPISymptoms} type="clear" />
             </View>
             <Modal isVisible={isPopUpAddSymptomsVisible} style={{ width: '100 %', height: '100%' }}>
                 <View style={styles.symptomsModalBox}>
