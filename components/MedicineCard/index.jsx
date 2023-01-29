@@ -19,13 +19,11 @@ export function MedicineCard({ nome, dose, estoque, dataInicio, dataFim, horario
 // Cartão mostrado no feed da home.
 export function MiniMedicineCard({nome, dose, estoque}){
     return (
-        <div>
             <View style={styles.cardBackground}>
                 <Text style={styles.downText}>
                     {nome}{" | "}{dose}{" | "}{estoque}{" comprimidos"}
                 </Text>
             </View>
-        </div>
     );
 }
 

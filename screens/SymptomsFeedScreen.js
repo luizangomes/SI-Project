@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { ImageBackground, ScrollView } from "react-native-web";
+import { ImageBackground } from "react-native";
 import { Text, View } from "../components/Themed";
 import React from 'react';
 import { SymptomsFeed } from "../components/SymptomsFeed";
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         color: "#FFF",
         fontWeight: "bold",
-        fontFamily: 'SeoulHangang CBL',
+     //   fontFamily: 'SeoulHangang CBL',
         flex: 1,
         padding: 30,
     },
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
 });
 
 /* import { StyleSheet } from "react-native";
-import { ImageBackground } from "react-native-web";
+import { ImageBackground } from "react-native";
 import { Text, View } from "../components/Themed";
 import React from 'react';
 import { SymptomsFeed } from "../components/SymptomsFeed";

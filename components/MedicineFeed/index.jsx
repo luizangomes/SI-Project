@@ -4,7 +4,7 @@
 
 import { StyleSheet, TextInput} from "react-native";
 import { Button } from "react-native-elements";
-import { ScrollView } from "react-native-web";
+import { ScrollView } from "react-native";
 import { Text, View } from "../Themed";
 import React, { useState } from 'react';
 import { MedicineCard } from "../MedicineCard";
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         color: "#FFF",
         fontWeight: "bold",
-        fontFamily: 'SeoulHangang CBL',
+    //    fontFamily: 'SeoulHangang CBL',
         flex: 1,
         paddingTop: 50,
         paddingBottom: 20,

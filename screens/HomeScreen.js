@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
-import { ImageBackground } from "react-native-web";
+import { ImageBackground, SafeAreaView } from "react-native";
 import { Text, View } from "../components/Themed";
-import { ScrollView } from "react-native-web";
+import { ScrollView } from "react-native";
 import React from 'react';
 import { SymptomCard } from "../components/SymptomCard";
 import { MiniMedicineCard } from "../components/MedicineCard";
@@ -10,7 +10,7 @@ const backgroundImage = require("../assets/images/background-image.jpg");
 
 export default function HomeScreen() {
     return (
-        <View style={styles.backgroundImageContainer}>
+        <SafeAreaView style={styles.backgroundImageContainer}>
             <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.image}>
                 <View style={{ flexDirection: "column", flex: 0.2, backgroundColor: "rgba(0, 0, 0, 0.35)", }}>
                     <View style={[styles.startContainer, { flexDirection: "row", flex: 1 }]}>
@@ -71,7 +71,7 @@ export default function HomeScreen() {
                 </View>
 
             </ImageBackground >
-        </View >     
+        </SafeAreaView >     
     );
 }
 
@@ -84,21 +84,21 @@ const styles = StyleSheet.create({
         textAlign: "center",
         color: "#1F7C6C",
         fontWeight: "bold",
-        fontFamily: 'SeoulHangang CBL',
+        //fontFamily: 'SeoulHangang CBL',
     },
     aba: {
         fontSize: 25,
         textAlign: "right",
         color: "#3B4846",
         fontWeight: "bold",
-        fontFamily: 'SeoulHangang CBL',
+       // fontFamily: 'SeoulHangang CBL',
     },
     userNameText: {
         fontSize: 32.5,
         textAlign: "center",
         color: "black",
         fontWeight: "bold",
-        fontFamily: 'SeoulHangang CBL',
+        //fontFamily: 'SeoulHangang CBL',
         borderRadius: 20,
         backgroundColor: " rgba(77, 194, 173, 0.73)",
         marginRight: 30,
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
         textAlign: "right",
         color: "#fff",
         fontWeight: "bold",
-        fontFamily: 'SeoulHangang CBL',
+       // fontFamily: 'SeoulHangang CBL',
     },
     separator: {
         marginVertical: 30,
