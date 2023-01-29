@@ -65,6 +65,7 @@ export default function HomeScreen() {
                                 nome = {"Dipirona 1mg"}
                                 dose = {"2x/dia"}
                                 estoque = {"5"}
+                                unidade = {"comprimidos"}
                             />
                         </ScrollView>
                     </View>

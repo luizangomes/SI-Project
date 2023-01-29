@@ -1,7 +1,3 @@
-/* Tutorial para o manipulador de datas
-    https://www.atomlab.dev/tutorials/react-native-modal-datetime-picker
-*/
-
 import { StyleSheet, TextInput} from "react-native";
 import { Button } from "react-native-elements";
 import { ScrollView } from "react-native";
@@ -10,47 +6,24 @@ import React, { useState } from 'react';
 import { MedicineCard } from "../MedicineCard";
 import Modal from "react-native-modal";
 import { Ionicons } from '@expo/vector-icons';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import DropDownPicker from "react-native-dropdown-picker";
 
 export function MedicineFeed() {
     const [medicine, setMedicine] = useState([]);
     const [nomeRemedio, setNomeRemedio] = useState('');
     const [dosagem, setDosagem] = useState('');
+    const [unidade, setUnidade] = useState('');
     const [estoque, setEstoque] = useState('');
-    const [dataInicio, setDataInicio] = useState(null);
-    const [dataFim, setDataFim] = useState(null);
+    const [dataInicio, setDataInicio] = useState('');
+    const [dataFim, setDataFim] = useState('');
     const [horario, setHorario] = useState("");
 
-    // Funções para manipular o seletor de datas.
-    const [dataInicioVisivel, setDataInicioVisivel] = useState(false);
-    const [dataFimVisivel, setDataFimVisivel] = useState(false);
-
-    const showDataInicio = () => {
-        setDataInicioVisivel(true);
-    };
-
-    const hideDataInicio = () => {
-        setDataInicioVisivel(false);
-    };
-
-    const showDataFim = () => {
-        setDataFimVisivel(true);
-    };
-
-    const hideDataFim = () => {
-        setDataFimVisivel(false);
-    };
-
-    const handleDataInicio = (data) => {
-        setDataInicio(data);
-        hideDataInicio();
-    };
-
-    const handleDataFim = (data) => {
-        setDataFim(data);
-        hideDataFim();
-    };
-
+    // Opções para o menu dropdown.
+    const [opcoes, setOpcoes] = useState([
+        {label: "comprimidos", value: "comprimidos"},
+        {label: "gotas", value: "gotas"},
+    ]);
+    const [aberto, setAberto] = useState(false);
 
     const [isPopUpAddMedicineVisible, setIsPopUpAddMedicineVisible] = useState(false);
 
@@ -58,7 +31,7 @@ export function MedicineFeed() {
 
     function handleAddMed() {
         const checkTextInput = () => {
-            if (!dosagem.trim() || !nomeRemedio.trim() || !dataInicio.trim() || !dataFim.trim() || !horario.trim()) {
+            if (!dosagem.trim() || !nomeRemedio.trim() || !dataInicio.trim() || !dataFim.trim() || !horario.trim() || !dosagem.trim() || !unidade.trim()) {
                 alert("Preencha todos os campos.");
                 return;
             }
@@ -66,6 +39,7 @@ export function MedicineFeed() {
                 const newMedicine = {
                     novoNome: nomeRemedio,
                     novaDosagem: dosagem,
+                    novaUnidade: unidade,
                     novoEstoque: estoque,
                     novaDataInic: dataInicio,
                     novaDataFim: dataFim,
@@ -75,6 +49,7 @@ export function MedicineFeed() {
                 setMedicine(prevState => [...prevState, newMedicine]);
                 setNomeRemedio("");
                 setDosagem("");
+                setUnidade("");
                 setEstoque("");
                 setDataInicio("");
                 setDataFim("");
@@ -95,6 +70,7 @@ export function MedicineFeed() {
                             key={med.novoNome}
                             nome={med.novoNome}
                             dose={med.novaDosagem}
+                            unidade = {med.novaUnidade}
                             estoque={med.novoEstoque}
                             dataInicio={med.novaDataInic}
                             dataFim={med.novaDataFim}
@@ -139,11 +115,22 @@ export function MedicineFeed() {
 
                         <View style={styles.spaceTitleFields} />
                         <Text style={{ fontSize: 18 }}>Estoque</Text>
-                        <TextInput
-                            type="text"
-                            style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
-                            onChange={e => setEstoque(e.target.value)}
-                        />                        
+                        <View style = {{flexDirection: "row", backgroundColor: "rgba(0,0,0,0)"}}>
+                            <TextInput
+                                type="text"
+                                style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20, flex: 0.2}}
+                                onChange={e => setEstoque(e.target.value)}
+                                />
+                            <DropDownPicker
+                                style = {{flex: 0.5}}
+                                value = {unidade}
+                                open = {aberto}
+                                items = {opcoes}
+                                setValue = {setUnidade}
+                                setOpen = {setAberto}
+                                setItems = {setOpcoes}
+                                />                    
+                        </View>
 
                         <View style={styles.spaceTitleFields} />
                         <Text style={{ fontSize: 18 }}>Data de início</Text>

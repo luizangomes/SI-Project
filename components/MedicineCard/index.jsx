@@ -3,12 +3,12 @@ import { StyleSheet } from "react-native";
 import React from 'react';
 
 // Cartão mostrado na tela de remédios.
-export function MedicineCard({ nome, dose, estoque, dataInicio, dataFim, horario }) {
+export function MedicineCard({ nome, dose, estoque, unidade, dataInicio, dataFim, horario }) {
     return (
         <div>
             <View style={styles.cardBackground}>
                 <Text style={styles.downText}>
-                    {nome}{" | "}{dose}{" | "}{estoque}{" comprimidos\nInicio: "}{dataInicio}{" | "}
+                    {nome}{" | "}{dose}{" | "}{estoque}{" "}{unidade}{"\nInicio: "}{dataInicio}{" | "}
                     {"Fim: "}{dataFim}{" | "}{"Horário: "}{horario}{"."}
                 </Text>
             </View>
@@ -17,11 +17,11 @@ export function MedicineCard({ nome, dose, estoque, dataInicio, dataFim, horario
 }
 
 // Cartão mostrado no feed da home.
-export function MiniMedicineCard({nome, dose, estoque}){
+export function MiniMedicineCard({nome, dose, estoque, unidade}){
     return (
             <View style={styles.cardBackground}>
                 <Text style={styles.downText}>
-                    {nome}{" | "}{dose}{" | "}{estoque}{" comprimidos"}
+                    {nome}{" | "}{dose}{" | "}{estoque}{" "}{unidade}
                 </Text>
             </View>
     );
