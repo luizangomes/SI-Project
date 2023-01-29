@@ -116,20 +116,24 @@ export function MedicineFeed() {
                         <View style={styles.spaceTitleFields} />
                         <Text style={{ fontSize: 18 }}>Estoque</Text>
                         <View style = {{flexDirection: "row", backgroundColor: "rgba(0,0,0,0)"}}>
-                            <TextInput
-                                type="text"
-                                style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20, flex: 0.2}}
-                                onChange={e => setEstoque(e.target.value)}
-                                />
-                            <DropDownPicker
-                                style = {{flex: 0.5}}
-                                value = {unidade}
-                                open = {aberto}
-                                items = {opcoes}
-                                setValue = {setUnidade}
-                                setOpen = {setAberto}
-                                setItems = {setOpcoes}
-                                />                    
+                            <View style = {{flex: 0.6, backgroundColor: "rgba(0,0,0,0)"}}>
+                                <TextInput
+                                    type="text"
+                                    style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20, height: 50}}
+                                    onChange={e => setEstoque(e.target.value)}
+                                    />
+                            </View>
+                            <View style = {{flex: 0.4, backgroundColor: "rgba(0,0,0,0)",}}>
+                                <DropDownPicker
+                                    placeholder = "Unidade de medida"
+                                    value = {unidade}
+                                    open = {aberto}
+                                    items = {opcoes}
+                                    setValue = {setUnidade}
+                                    setOpen = {setAberto}
+                                    setItems = {setOpcoes}
+                                    />
+                            </View>
                         </View>
 
                         <View style={styles.spaceTitleFields} />
