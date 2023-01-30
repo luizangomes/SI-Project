@@ -8,7 +8,7 @@ Falta colocar cor de foco (linha 45 em diante).
 */
 
 import * as React from 'react';
-import { View, Text, Image } from 'react-native-web';
+import { View, Text, Image } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';

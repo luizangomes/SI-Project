@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { ImageBackground } from "react-native-web";
+import { ImageBackground } from "react-native";
 import { Text, View } from "../components/Themed";
 import React from 'react';
 
@@ -24,14 +24,14 @@ const styles = StyleSheet.create({
         textAlign: "center",
         color: "#1F7C6C",
         fontWeight: "bold",
-        fontFamily: 'SeoulHangang CBL',
+       // fontFamily: 'SeoulHangang CBL',
     },
     userNameText: {
         fontSize: 32.5,
         textAlign: "center",
         color: "black",
         fontWeight: "bold",
-        fontFamily: 'SeoulHangang CBL',
+      //  fontFamily: 'SeoulHangang CBL',
         borderRadius: 20,
         backgroundColor: " rgba(77, 194, 173, 0.73)",
         marginRight: 30,

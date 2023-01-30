@@ -36,6 +36,7 @@ function RootNavigator() {
         name="Start"
         component={StartScreen}
       />
+
       <Stack.Screen name = "Root" component={BottomTabNavigator} />
       <Stack.Screen
         name="NotFound"

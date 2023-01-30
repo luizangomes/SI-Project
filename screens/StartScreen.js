@@ -1,12 +1,9 @@
 import { StyleSheet, Text, View, Image} from 'react-native';
-import { ImageBackground } from "react-native-web";
-import { TouchableHighlight } from 'react-native-web';
-import { NavigationContainer } from '@react-navigation/native';
-import HomeScreen from './HomeScreen';
-
-const backgroundImage = require("../assets/images/background-image.jpg");
+import { ImageBackground } from "react-native";
+import { TouchableHighlight } from 'react-native';
 
 export default function StartScreen({navigation}) {
+  const backgroundImage = require("../assets/images/background-image.jpg");
   return (
     <View style = {{flex: 1}}>
         <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.image}>
@@ -52,7 +49,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         textAlign: "center",
         color: "#FFF",
-        fontFamily: 'SeoulHangang CBL',
+      //  fontFamily: 'SeoulHangang CBL',
     },
     title: {
         fontSize: 65,
@@ -60,6 +57,6 @@ const styles = StyleSheet.create({
         marginTop: "20%",
         color: "rgba(23, 80, 70, 1)", // 0x175046,
         fontWeight: "bold",
-        fontFamily: 'SeoulHangang CBL',
+      //  fontFamily: 'SeoulHangang CBL',
     },
 });
