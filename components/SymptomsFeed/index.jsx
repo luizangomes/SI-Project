@@ -1,61 +1,107 @@
-import { StyleSheet, TextInput } from "react-native";
+import { StyleSheet, TextInput, DropdownButton } from "react-native";
 import { Button } from "react-native-elements";
 import { ScrollView } from "react-native-web";
 import { Text, View } from "../Themed";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SymptomCard } from "../SymptomCard";
 import Modal from "react-native-modal";
 import { Ionicons } from '@expo/vector-icons';
-import { set } from "react-native-reanimated";
+import api from "./../../services/api"
+import DropDownPicker from "react-native-dropdown-picker";
 
 export function SymptomsFeed() {
     const [symptoms, setSymptoms] = useState([]);
     const [userMedication, setMedication] = useState('');
     const [userReport, setUserReport] = useState('');
+    const [reports, setReports] = useState([]);
+    const [medicationsList, setMedicationsList] = useState([]);
 
     const [isPopUpAddSymptomsVisible, setIsPopUpAddSymptomsVisible] = useState(false);
 
     const handlePopUpAddSymptoms = () => setIsPopUpAddSymptomsVisible(() => !isPopUpAddSymptomsVisible);
 
-    function handleAddSymptom() {
-        const checkTextInput = () => {
-            if (!userReport.trim()) {
-                alert("Espaço de Relato está vazio!");
-                return;
-            }
-            else {
-                const newSymptoms = {
-                    medication: userMedication,
-                    report: userReport,
-                    date: new Date().toLocaleDateString("pt-br"),
-                    time: new Date().toLocaleTimeString("pt-br", {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                    })
-                };
-                setSymptoms(prevState => [...prevState, newSymptoms]);
-                setMedication("");
-                setUserReport("");
-                handlePopUpAddSymptoms();
-            }
+    useEffect(() => {
+        api.get('reports').then((response) => {
+            setReports(response.data);
+        })
+    }, []);
+
+    useEffect(() => {
+        api.get('medications').then((response) => {
+            setMedicationsList(response.data);
+        })
+    }, []);
+
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState([
+        medicationsList.map(med => { label: { med.nome }; value: { med.id } })
+    ]);
+
+    console.log(items)
+
+    // function handleAddSymptom() {
+    //     const checkTextInput = () => {
+    //         if (!userReport.trim()) {
+    //             alert("Espaço de Relato está vazio!");
+    //             return;
+    //         }
+    //         else {
+    //             const newSymptoms = {
+    //                 medication: userMedication,
+    //                 report: userReport,
+    //                 date: new Date().toLocaleDateString("pt-br"),
+    //                 time: new Date().toLocaleTimeString("pt-br", {
+    //                     hour: '2-digit',
+    //                     minute: '2-digit',
+    //                 })
+    //             };
+    //             handleAddSymptomAPI();
+    //             setSymptoms(prevState => [...prevState, newSymptoms]);
+    //             setMedication("");
+    //             setUserReport("");
+    //             handlePopUpAddSymptoms();
+    //         }
+    //     }
+    //     checkTextInput();
+    // }
+
+    function handleAddSymptomAPI() {
+        if (!userReport.trim()) {
+            alert("Espaço de Relato está vazio!");
+            return;
         }
-        checkTextInput();
+        else {
+            const newSymptoms = {
+                medicationId: 'a3f9cc7e-422f-4518-99e6-e9c448dd6047',
+                content: userReport,
+                userId: '56066fa6-c068-47f4-9dcf-54007c6b417b'
+            };
+            api.post('reports', newSymptoms).then((response) => {
+                setReports(prevState => [...prevState, response.data]);
+            })
+            setMedication("");
+            setUserReport("");
+            handlePopUpAddSymptoms();
+        }
     }
+
+    console.log(medicationsList)
 
     return (
         <View style={{ height: '100%', alignContent: 'flex-end', justifyContent: "flex-end", flexDirection: "column", backgroundColor: "rgba(0, 0, 0, 0)" }}>
             <Text style={[styles.titleInPages]}>Histórico De{"\n"}Sintomas</Text>
             <ScrollView style={[styles.symptomsFeedScroll]}>
                 {
-                    symptoms.map(symptom =>
+                    reports.map(report =>
                         <SymptomCard
-                            key={symptom.time}
-                            medication={symptom.medication}
-                            date={symptom.date}
-                            time={symptom.time}
-                            report={symptom.report}
+                            key={report.id}
+                            medication={report.medicationId}
+                            date={report.createdAt.substring(0, 10)}
+                            time={report.createdAt.substring(11, 16)}
+                            report={report.content}
                         />
-                    )}
+                    )
+                }
             </ScrollView>
             <View style={{
                 width: '100%',
@@ -64,7 +110,7 @@ export function SymptomsFeed() {
                 justifyContent: 'flex-start',
                 flexDirection: "row-reverse",
                 backgroundColor: "rgba(0, 0, 0, 0)",
-                }
+            }
             }>
                 <Button icon={<Ionicons name="checkmark-circle-outline" size={55} color="rgba(0, 255,209, 1)" />} onPress={handlePopUpAddSymptoms} type="clear" />
             </View>
@@ -84,6 +130,7 @@ export function SymptomsFeed() {
                             style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
                             onChange={e => setMedication(e.target.value)}
                         />
+                        {/* <DropDownPicker value={value} items={items} setValue={setValue} setItems={setItems} /> */}
                         <View style={styles.spaceFields} />
                         <Text style={{ fontSize: 18 }}>Relato</Text>
                         <TextInput
@@ -94,7 +141,7 @@ export function SymptomsFeed() {
                             onChange={e => setUserReport(e.target.value)}
                         />
                         <View style={{ width: '100%', paddingBottom: 10, flex: 1, flexDirection: "row-reverse", backgroundColor: "rgba(0, 255, 209, 0)" }}>
-                            <Button icon={<Ionicons name="checkmark-circle-outline" size={55} color="white" />} onPress={handleAddSymptom} type="clear" />
+                            <Button icon={<Ionicons name="checkmark-circle-outline" size={55} color="white" />} onPress={handleAddSymptomAPI} type="clear" />
                         </View>
                     </>
                 </View >

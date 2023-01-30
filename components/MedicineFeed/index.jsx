@@ -2,7 +2,7 @@
     https://www.atomlab.dev/tutorials/react-native-modal-datetime-picker
 */
 
-import { StyleSheet, TextInput} from "react-native";
+import { StyleSheet, TextInput } from "react-native";
 import { Button } from "react-native-elements";
 import { ScrollView } from "react-native-web";
 import { Text, View } from "../Themed";
@@ -10,7 +10,6 @@ import React, { useState } from 'react';
 import { MedicineCard } from "../MedicineCard";
 import Modal from "react-native-modal";
 import { Ionicons } from '@expo/vector-icons';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 export function MedicineFeed() {
     const [medicine, setMedicine] = useState([]);
@@ -71,7 +70,7 @@ export function MedicineFeed() {
                     novaDataFim: dataFim,
                     novoHorario: horario,
                 };
-                
+
                 setMedicine(prevState => [...prevState, newMedicine]);
                 setNomeRemedio("");
                 setDosagem("");
@@ -109,70 +108,70 @@ export function MedicineFeed() {
                 justifyContent: 'flex-start',
                 flexDirection: "row-reverse",
                 backgroundColor: "rgba(0, 0, 0, 0)",
-                }
+            }
             }>
                 <Button icon={<Ionicons name="checkmark-circle-outline" size={55} color="rgba(0, 255,209, 1)" />} onPress={handlePopUpAddMedicine} type="clear" />
             </View>
             <Modal isVisible={isPopUpAddMedicineVisible} style={{ width: '100 %', height: '100%' }}>
                 <View style={styles.medicineModalBox}>
-                        <View style={{ padding: "0%", marginTop: "5%", flexDirection: "row-reverse", flex: 1, backgroundColor: "rgba(0, 0, 0, 0)" }}>
-                            <View style={{ paddingHorizontal: "0%", marginTop: "8%", width: "10%", flex: 1, flexDirection: "row-reverse", backgroundColor: "rgba(0, 0, 0, 0)" }}>
-                                <Button color="rgba(0, 0, 0, 0)" icon={<Ionicons name="close-sharp" size={40} color="white" />} onPress={handlePopUpAddMedicine} type="clear" />
-                            </View>
-                            <Text style={styles.addTitlePopUp}>Adicionar remédio</Text>
+                    <View style={{ padding: "0%", marginTop: "5%", flexDirection: "row-reverse", flex: 1, backgroundColor: "rgba(0, 0, 0, 0)" }}>
+                        <View style={{ paddingHorizontal: "0%", marginTop: "8%", width: "10%", flex: 1, flexDirection: "row-reverse", backgroundColor: "rgba(0, 0, 0, 0)" }}>
+                            <Button color="rgba(0, 0, 0, 0)" icon={<Ionicons name="close-sharp" size={40} color="white" />} onPress={handlePopUpAddMedicine} type="clear" />
                         </View>
-                        <View style={styles.spaceTitleFields} />
-                        <Text style={{ fontSize: 18 }}>Nome do remédio</Text>
-                        <TextInput
-                            type="text"
-                            style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
-                            onChange={e => setNomeRemedio(e.target.value)}
-                        />
+                        <Text style={styles.addTitlePopUp}>Adicionar remédio</Text>
+                    </View>
+                    <View style={styles.spaceTitleFields} />
+                    <Text style={{ fontSize: 18 }}>Nome do remédio</Text>
+                    <TextInput
+                        type="text"
+                        style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
+                        onChange={e => setNomeRemedio(e.target.value)}
+                    />
 
-                        <View style={styles.spaceTitleFields} />
-                        <Text style={{ fontSize: 18 }}>Dosagem</Text>
-                        <TextInput
-                            type="text"
-                            style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
-                            onChange={e => setDosagem(e.target.value)}
-                        />
+                    <View style={styles.spaceTitleFields} />
+                    <Text style={{ fontSize: 18 }}>Dosagem</Text>
+                    <TextInput
+                        type="text"
+                        style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
+                        onChange={e => setDosagem(e.target.value)}
+                    />
 
-                        <View style={styles.spaceTitleFields} />
-                        <Text style={{ fontSize: 18 }}>Estoque</Text>
-                        <TextInput
-                            type="text"
-                            style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
-                            onChange={e => setEstoque(e.target.value)}
-                        />                        
+                    <View style={styles.spaceTitleFields} />
+                    <Text style={{ fontSize: 18 }}>Estoque</Text>
+                    <TextInput
+                        type="text"
+                        style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
+                        onChange={e => setEstoque(e.target.value)}
+                    />
 
-                        <View style={styles.spaceTitleFields} />
-                        <Text style={{ fontSize: 18 }}>Data de início</Text>
-                        <TextInput
-                            type="text"
-                            style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
-                            onChange={e => setDataInicio(e.target.value)}
-                        />
-                        
+                    <View style={styles.spaceTitleFields} />
+                    <Text style={{ fontSize: 18 }}>Data de início</Text>
+                    <TextInput
+                        type="text"
+                        style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
+                        onChange={e => setDataInicio(e.target.value)}
+                    />
 
-                        <View style={styles.spaceTitleFields} />
-                        <Text style={{ fontSize: 18 }}>Data fim</Text>
-                        <TextInput
-                            type="text"
-                            style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
-                            onChange={e => setDataFim(e.target.value)}
-                        />
 
-                        <View style={styles.spaceTitleFields} />
-                        <Text style={{ fontSize: 18 }}>Horários</Text>
-                        <TextInput
-                            type="text"
-                            style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
-                            onChange={e => setHorario(e.target.value)}
-                        />
-                        
-                        <View style={{ width: '100%', paddingBottom: 10, flex: 1, flexDirection: "row-reverse", backgroundColor: "rgba(0, 255, 209, 0)" }}>
-                            <Button icon={<Ionicons name="checkmark-circle-outline" size={50} color="white" />} onPress={handleAddMed} type="clear" />
-                        </View>
+                    <View style={styles.spaceTitleFields} />
+                    <Text style={{ fontSize: 18 }}>Data fim</Text>
+                    <TextInput
+                        type="text"
+                        style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
+                        onChange={e => setDataFim(e.target.value)}
+                    />
+
+                    <View style={styles.spaceTitleFields} />
+                    <Text style={{ fontSize: 18 }}>Horários</Text>
+                    <TextInput
+                        type="text"
+                        style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
+                        onChange={e => setHorario(e.target.value)}
+                    />
+
+                    <View style={{ width: '100%', paddingBottom: 10, flex: 1, flexDirection: "row-reverse", backgroundColor: "rgba(0, 255, 209, 0)" }}>
+                        <Button icon={<Ionicons name="checkmark-circle-outline" size={50} color="white" />} onPress={handleAddMed} type="clear" />
+                    </View>
                 </View >
             </Modal >
         </View >
