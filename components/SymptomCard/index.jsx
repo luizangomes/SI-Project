@@ -4,10 +4,10 @@ import React from 'react';
 
 export function SymptomCard({ name, date, time, report }) {
     return (
-            <View style={styles.cardBackground}>
-                <Text style={styles.downText}>{name} {date} {time}</Text>
-                <Text style={styles.downText}>{report}{"\n"}</Text>
-            </View>
+        <View style={styles.cardBackground}>
+            <Text style={styles.downText}>{name} {date} {time}</Text>
+            <Text style={styles.downText}>{report}{"\n"}</Text>
+        </View>
     );
 }
 

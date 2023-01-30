@@ -2,44 +2,45 @@ import { StyleSheet, TextInput } from "react-native";
 import { Button } from "react-native-elements";
 import { ScrollView } from "react-native";
 import { Text, View } from "../Themed";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SymptomCard } from "../SymptomCard";
 import Modal from "react-native-modal";
 import { Ionicons } from '@expo/vector-icons';
-import { set } from "react-native-reanimated";
+import api from "./../../services/api"
 
 export function SymptomsFeed() {
-    const [symptoms, setSymptoms] = useState([]);
     const [userMedication, setMedication] = useState('');
     const [userReport, setUserReport] = useState('');
+    const [reports, setReports] = useState([]);
 
     const [isPopUpAddSymptomsVisible, setIsPopUpAddSymptomsVisible] = useState(false);
 
     const handlePopUpAddSymptoms = () => setIsPopUpAddSymptomsVisible(() => !isPopUpAddSymptomsVisible);
 
+    useEffect(() => {
+        api.get('reports').then((response) => {
+            setReports(response.data);
+        })
+    }, []);
+
     function handleAddSymptom() {
-        const checkTextInput = () => {
-            if (!userReport.trim()) {
-                alert("Espaço de Relato está vazio!");
-                return;
-            }
-            else {
-                const newSymptoms = {
-                    medication: userMedication,
-                    report: userReport,
-                    date: new Date().toLocaleDateString("pt-br"),
-                    time: new Date().toLocaleTimeString("pt-br", {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                    })
-                };
-                setSymptoms(prevState => [...prevState, newSymptoms]);
-                setMedication("");
-                setUserReport("");
-                handlePopUpAddSymptoms();
-            }
+        if (!userReport.trim()) {
+            alert("Espaço de Relato está vazio!");
+            return;
         }
-        checkTextInput();
+        else {
+            const newSymptoms = {
+                medicationId: 'a3f9cc7e-422f-4518-99e6-e9c448dd6047',
+                content: userReport,
+                userId: '56066fa6-c068-47f4-9dcf-54007c6b417b'
+            };
+            api.post('reports', newSymptoms).then((response) => {
+                setReports(prevState => [...prevState, response.data]);
+            })
+            setMedication("");
+            setUserReport("");
+            handlePopUpAddSymptoms();
+        }
     }
 
     return (
@@ -47,13 +48,13 @@ export function SymptomsFeed() {
             <Text style={[styles.titleInPages]}>Histórico De{"\n"}Sintomas</Text>
             <ScrollView style={[styles.symptomsFeedScroll]}>
                 {
-                    symptoms.map(symptom =>
+                    reports.map(report =>
                         <SymptomCard
-                            key={symptom.time}
-                            medication={symptom.medication}
-                            date={symptom.date}
-                            time={symptom.time}
-                            report={symptom.report}
+                            key={report.id}
+                            medication={report.medicationId}
+                            date={report.createdAt.substring(0, 10)}
+                            time={report.createdAt.substring(11, 16)}
+                            report={report.content}
                         />
                     )}
             </ScrollView>
@@ -64,7 +65,7 @@ export function SymptomsFeed() {
                 justifyContent: 'flex-start',
                 flexDirection: "row-reverse",
                 backgroundColor: "rgba(0, 0, 0, 0)",
-                }
+            }
             }>
                 <Button icon={<Ionicons name="checkmark-circle-outline" size={55} color="rgba(0, 255,209, 1)" />} onPress={handlePopUpAddSymptoms} type="clear" />
             </View>
@@ -133,10 +134,10 @@ const styles = StyleSheet.create({
         textAlign: "center",
         color: "#FFF",
         fontWeight: "bold",
-    //    fontFamily: 'SeoulHangang CBL',
+        //    fontFamily: 'SeoulHangang CBL',
         flex: 1,
-        paddingTop: 50,
-        paddingBottom: 20,
+        paddingTop: 30,
+        paddingBottom: 40,
 
     },
     symptomsModalBox: {
