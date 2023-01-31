@@ -76,7 +76,7 @@ export function MedicineFeed() {
                 };
                 */
                 
-                api.post('reports', newSymptoms).then((response) => {
+                api.post('medications', newMedicine).then((response) => {
                     setMedicine(prevState => [...prevState, response.data]);
                 })
 
