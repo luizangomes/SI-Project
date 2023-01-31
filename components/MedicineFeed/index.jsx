@@ -7,6 +7,7 @@ import { MedicineCard } from "../MedicineCard";
 import Modal from "react-native-modal";
 import { Ionicons } from '@expo/vector-icons';
 import DropDownPicker from "react-native-dropdown-picker";
+import api from "./../../services/api";
 
 export function MedicineFeed() {
     const [medicine, setMedicine] = useState([]);
@@ -29,6 +30,12 @@ export function MedicineFeed() {
 
     const handlePopUpAddMedicine = () => setIsPopUpAddMedicineVisible(() => !isPopUpAddMedicineVisible);
 
+    useEffect(() => {
+        api.get('medications').then((response) => {
+            setMedicine(response.data)
+        })
+    }, []);
+
     function handleAddMed() {
         const checkTextInput = () => {
             if (!dosagem.trim() || !nomeRemedio.trim() || !dataInicio.trim() || !dataFim.trim() || !horario.trim() || !dosagem.trim() || !unidade.trim()) {
@@ -36,6 +43,28 @@ export function MedicineFeed() {
                 return;
             }
             else {
+                const newMedicine = {
+                    userId: '56066fa6-c068-47f4-9dcf-54007c6b417b',
+                    nome: nomeRemedio,
+                    tipo: unidade,
+                    quantity: dosagem,
+                    estoque: estoque,
+                    dataInicio: dataInicio,
+                    dataFim: dataFim,
+                    horario: horario,
+                };
+                /*
+                    id  String  @id @default(uuid()) @unique
+                    nome     String
+                    tipo String
+                    quantity Int
+                    estoque Int
+                    dataInicio String
+                    dataFim String
+                    horario String[]
+                    reports Report[]
+                */
+                /*
                 const newMedicine = {
                     novoNome: nomeRemedio,
                     novaDosagem: dosagem,
@@ -45,7 +74,12 @@ export function MedicineFeed() {
                     novaDataFim: dataFim,
                     novoHorario: horario,
                 };
+                */
                 
+                api.post('medications', newMedicine).then((response) => {
+                    setMedicine(prevState => [...prevState, response.data]);
+                })
+
                 setMedicine(prevState => [...prevState, newMedicine]);
                 setNomeRemedio("");
                 setDosagem("");
@@ -60,6 +94,7 @@ export function MedicineFeed() {
         checkTextInput();
     }
 
+
     return (
         <View style={{ height: '100%', alignContent: 'flex-end', justifyContent: "flex-end", flexDirection: "column", backgroundColor: "rgba(0, 0, 0, 0)" }}>
             <Text style={[styles.titleInPages]}>Histórico De{"\n"}Remédios</Text>
@@ -67,14 +102,14 @@ export function MedicineFeed() {
                 {
                     medicine.map(med =>
                         <MedicineCard
-                            key={med.novoNome}
-                            nome={med.novoNome}
-                            dose={med.novaDosagem}
-                            unidade = {med.novaUnidade}
-                            estoque={med.novoEstoque}
-                            dataInicio={med.novaDataInic}
-                            dataFim={med.novaDataFim}
-                            horario={med.novoHorario}
+                            key={med.id}
+                            nome={med.nome}
+                            dose={med.quantity}
+                            unidade = {med.tipo}
+                            estoque={med.estoque}
+                            dataInicio={med.dataInicio}
+                            dataFim={med.dataFim}
+                            horario={med.horario}
                         />
                     )}
             </ScrollView>
