@@ -2,13 +2,30 @@ import { StyleSheet } from "react-native";
 import { ImageBackground, SafeAreaView } from "react-native";
 import { Text, View } from "../components/Themed";
 import { ScrollView } from "react-native";
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SymptomCard } from "../components/SymptomCard";
-import { MiniMedicineCard } from "../components/MedicineCard";
+import { MedicineCard } from "../components/MedicineCard";
+import api from "./../services/api"
 
 const backgroundImage = require("../assets/images/background-image.jpg");
 
 export default function HomeScreen() {
+    const [medicine, setMedicine] = useState([]);
+    const [reports, setReports] = useState([]);
+
+    useEffect(() => {
+        api.get('medications').then((response) => {
+            setMedicine(response.data)
+        })
+    }, []);
+
+    useEffect(() => {
+        api.get('reports').then((response) => {
+            setReports(response.data)
+        })
+    }, []);
+
+
     return (
         <SafeAreaView style={styles.backgroundImageContainer}>
             <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.image}>
@@ -23,56 +40,46 @@ export default function HomeScreen() {
                 </View>
 
                 <View style={{ flexDirection: "column", flex: 0.4, backgroundColor: "rgba(0, 0, 0, 0.35)", }}>
-                    <View style = {[styles.symptomsBeta, {height: '70%'}]}>
-                        <Text style = {styles.aba}>Sintomas</Text>
-                        <ScrollView style = {{backgroundColor: "rgba(0, 0, 0, 0)"}} >
-                            <SymptomCard
-                                name = {"Teste 1"}
-                                date = {"11/12/2022"}
-                                time = {"10:49"}
-                                report = {"Febre, dor de cabeça e dor de garganta"}
-                            />
-                            <Text>{"\n"}</Text>
-                            <SymptomCard
-                                name = {"Teste 2"}
-                                date = {"10/12/2022"}
-                                time = {"11:11"}
-                                report = {"Febre, dor de cabeça, dor de garganta e dor de barriga"}                                    
-                            />
-                            <Text>{"\n"}</Text>
-                            <SymptomCard
-                                name = {"Teste 3"}
-                                date = {"10/12/2022"}
-                                time = {"11:11"}
-                                report = {"Febre, dor de cabeça, dor de garganta e dor de barriga"}                                    
-                            />
-                            <Text>{"\n"}</Text>
-                            <SymptomCard
-                                name = {"Teste 4"}
-                                date = {"10/12/2022"}
-                                time = {"11:11"}
-                                report = {"Febre, dor de cabeça, dor de garganta e dor de barriga"}                                    
-                            />
+                    <View style={[styles.symptomsBeta, { height: '70%' }]}>
+                        <Text style={styles.aba}>Sintomas</Text>
+                        <ScrollView style={{ backgroundColor: "rgba(0, 0, 0, 0)" }} >
+                            {
+                                reports.map(report =>
+                                    <SymptomCard
+                                        key={report.id}
+                                        medication={report.name}
+                                        date={report.createdAt.substring(0, 10)}
+                                        time={report.createdAt.substring(11, 16)}
+                                        report={report.content}
+                                    />
+                                )}
                         </ScrollView>
                     </View>
 
                 </View>
                 <View style={{ flexDirection: "column", flex: 0.4, backgroundColor: "rgba(0, 0, 0, 0.35)", }}>
-                    <View style = {[styles.symptomsBeta, {height: '70%', bottom: "15%"}]}>
-                        <Text style = {styles.aba}>Remédios</Text>
-                        <ScrollView style = {{backgroundColor: "rgba(0, 0, 0, 0)"}} >
-                            <MiniMedicineCard
-                                nome = {"Dipirona 1mg"}
-                                dose = {"2x/dia"}
-                                estoque = {"5"}
-                                unidade = {"comprimidos"}
-                            />
+                    <View style={[styles.symptomsBeta, { height: '70%', bottom: "15%" }]}>
+                        <Text style={styles.aba}>Remédios</Text>
+                        <ScrollView style={{ backgroundColor: "rgba(0, 0, 0, 0)" }} >
+                            {
+                                medicine.map(med =>
+                                    <MedicineCard
+                                        key={med.id}
+                                        nome={med.nome}
+                                        dose={med.quantity}
+                                        unidade={med.tipo}
+                                        estoque={med.estoque}
+                                        dataInicio={med.dataInicio}
+                                        dataFim={med.dataFim}
+                                        horario={med.horario}
+                                    />
+                                )}
                         </ScrollView>
                     </View>
                 </View>
 
             </ImageBackground >
-        </SafeAreaView >     
+        </SafeAreaView >
     );
 }
 
@@ -92,7 +99,7 @@ const styles = StyleSheet.create({
         textAlign: "right",
         color: "#3B4846",
         fontWeight: "bold",
-       // fontFamily: 'SeoulHangang CBL',
+        // fontFamily: 'SeoulHangang CBL',
     },
     userNameText: {
         fontSize: 32.5,
@@ -109,7 +116,7 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
         paddingHorizontal: 10,
         height: '90%', // tá ajudando agora, mas deve dar erro no futuro, este % reduz o tamanho da caixa
- 
+
     },
     startContainer: {
         flex: 1,
@@ -135,7 +142,7 @@ const styles = StyleSheet.create({
         textAlign: "right",
         color: "#fff",
         fontWeight: "bold",
-       // fontFamily: 'SeoulHangang CBL',
+        // fontFamily: 'SeoulHangang CBL',
     },
     separator: {
         marginVertical: 30,
