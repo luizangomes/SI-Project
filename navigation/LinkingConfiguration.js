@@ -11,7 +11,7 @@ export default {
     screens: {
       Root: {
         screens: {
-          StartPage : {
+          StartPage: {
             screens: {
               StartScreen: "Start",
             },

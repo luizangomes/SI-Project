@@ -25,10 +25,10 @@ import StartScreen from '../screens/StartScreen';
 const Tab = createBottomTabNavigator();
 
 
-export default function BottomTabNavigator(){
+export default function BottomTabNavigator() {
   return (
     <Tab.Navigator
-      screenOptions = {{
+      screenOptions={{
         tabBarShowLabel: false,
         tabBarStyle: {
           position: 'absolute',
@@ -42,116 +42,116 @@ export default function BottomTabNavigator(){
         }
       }}
 
-      initialRouteName = 'Home'
-    > 
-      
-      <Tab.Screen name = "Perfil" component = {ProfilePageScreen}
-      options = {{
-        tabBarIcon: () => (
-          <View style = {{alignItems: 'center', justifyContent: 'center', top: 0}}>
-            <Text
-            style ={{color: '#fff', fontSize: 15, }}>Perfil
-            </Text>
-            <Image
-            source = {require('../assets/icons/perfil.png')}
-            resizeMode = 'contain'
-            style = {{
-              width: 45,
-              height: 45,
-            }}
-            />
-          </View>
-        ),
+      initialRouteName='Home'
+    >
 
-        headerShown: false,
-      }}
+      <Tab.Screen name="Perfil" component={ProfilePageScreen}
+        options={{
+          tabBarIcon: () => (
+            <View style={{ alignItems: 'center', justifyContent: 'center', top: 0 }}>
+              <Text
+                style={{ color: '#fff', fontSize: 15, }}>Perfil
+              </Text>
+              <Image
+                source={require('../assets/icons/perfil.png')}
+                resizeMode='contain'
+                style={{
+                  width: 45,
+                  height: 45,
+                }}
+              />
+            </View>
+          ),
+
+          headerShown: false,
+        }}
       />
 
-      <Tab.Screen name = "Vacinas" component = {PlaceholderScreen}
-            options = {{
-              tabBarIcon: () => (
-                <View style = {{alignItems: 'center', justifyContent: 'center', top: 0}}>
-                  <Text
-                  style ={{color: '#fff', fontSize: 15, }}>Vacinas
-                  </Text>
-                  <Image
-                  source = {require('../assets/icons/vacina.png')}
-                  resizeMode = 'contain'
-                  style = {{
-                    width: 45,
-                    height: 45,
-                  }}
-                  />
-                </View>
-              ),
+      <Tab.Screen name="Vacinas" component={PlaceholderScreen}
+        options={{
+          tabBarIcon: () => (
+            <View style={{ alignItems: 'center', justifyContent: 'center', top: 0 }}>
+              <Text
+                style={{ color: '#fff', fontSize: 15, }}>Vacinas
+              </Text>
+              <Image
+                source={require('../assets/icons/vacina.png')}
+                resizeMode='contain'
+                style={{
+                  width: 45,
+                  height: 45,
+                }}
+              />
+            </View>
+          ),
 
-              headerShown: false,
-            }}
+          headerShown: false,
+        }}
       />
 
-      <Tab.Screen name = "Home" component = {HomeScreen}
-            options = {{
-              tabBarIcon: () => (
-                <View style = {{alignItems: 'center', justifyContent: 'center', top: 0}}>
-                  <Image
-                  source = {require('../assets/icons/home.png')}
-                  resizeMode = 'contain'
-                  style = {{
-                    width: 55,
-                    height: 55,
-                  }}
-                  />
-                </View>
-              ),
+      <Tab.Screen name="Home" component={HomeScreen}
+        options={{
+          tabBarIcon: () => (
+            <View style={{ alignItems: 'center', justifyContent: 'center', top: 0 }}>
+              <Image
+                source={require('../assets/icons/home.png')}
+                resizeMode='contain'
+                style={{
+                  width: 55,
+                  height: 55,
+                }}
+              />
+            </View>
+          ),
 
-              headerShown: false,
-            }}
+          headerShown: false,
+        }}
       />
 
-      <Tab.Screen name = "Remédios" component = {MedicineFeedScreen}
-            options = {{
-              tabBarIcon: () => (
-                <View style = {{alignItems: 'center', justifyContent: 'center', top: 0}}>
-                  <Text
-                  style ={{color: '#fff', fontSize: 15, }}>Remédios
-                  </Text>
-                  <Image
-                  source = {require('../assets/icons/remedios.png')}
-                  resizeMode = 'contain'
-                  style = {{
-                    width: 45,
-                    height: 45,
-                  }}
-                  />
-                </View>
-              ),
+      <Tab.Screen name="Remédios" component={MedicineFeedScreen}
+        options={{
+          tabBarIcon: () => (
+            <View style={{ alignItems: 'center', justifyContent: 'center', top: 0 }}>
+              <Text
+                style={{ color: '#fff', fontSize: 15, }}>Remédios
+              </Text>
+              <Image
+                source={require('../assets/icons/remedios.png')}
+                resizeMode='contain'
+                style={{
+                  width: 45,
+                  height: 45,
+                }}
+              />
+            </View>
+          ),
 
-              headerShown: false,
+          headerShown: false,
 
-            }}
+        }}
       />
 
-      <Tab.Screen name = "Sintomas" component = {SymptomsFeedScreen}
-            options = {{
-              tabBarIcon: () => (
-                <View style = {{alignItems: 'center', justifyContent: 'center', top: 0}}>
-                  <Text
-                  style ={{color: '#fff', fontSize: 15, }}>Sintomas
-                  </Text>
-                  <Image
-                  source = {require('../assets/icons/sintomas.png')}
-                  resizeMode = 'contain'
-                  style = {{
-                    width: 45,
-                    height: 45,
-                  }}
-                  />
-                </View>
-              ),
+      <Tab.Screen name="Sintomas" component={SymptomsFeedScreen}
+        options={{
+          tabBarIcon: () => (
+            <View style={{ alignItems: 'center', justifyContent: 'center', top: 0 }}>
+              <Text
+                style={{ color: '#fff', fontSize: 15, }}>Sintomas
+              </Text>
+              <Image
+                source={require('../assets/icons/sintomas.png')}
+                resizeMode='contain'
+                style={{
+                  width: 45,
+                  height: 45,
+                }}
+              />
+            </View>
+          ),
 
-              headerShown: false,
+          headerShown: false,
 
-            }}
+        }}
       />
 
     </Tab.Navigator>

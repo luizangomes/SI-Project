@@ -9,7 +9,7 @@ export default function ProfilePageScreen() {
     return (
         <View style={styles.backgroundImageContainer}>
             <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.image}>
-                <Text style={styles.userNameText}>Oi :)</Text>
+                <Text style={styles.userNameText}>Oi :){"\n"} Tudo bom? {"\n"} Essa página não existe ainda... {"\n"};-;</Text>
             </ImageBackground>
         </View >
     );
@@ -24,14 +24,14 @@ const styles = StyleSheet.create({
         textAlign: "center",
         color: "#1F7C6C",
         fontWeight: "bold",
-       // fontFamily: 'SeoulHangang CBL',
+        // fontFamily: 'SeoulHangang CBL',
     },
     userNameText: {
         fontSize: 32.5,
         textAlign: "center",
         color: "black",
         fontWeight: "bold",
-      //  fontFamily: 'SeoulHangang CBL',
+        //  fontFamily: 'SeoulHangang CBL',
         borderRadius: 20,
         backgroundColor: " rgba(77, 194, 173, 0.73)",
         marginRight: 30,
