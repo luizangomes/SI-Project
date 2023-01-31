@@ -6,12 +6,15 @@ import React, { useState, useEffect } from 'react';
 import { SymptomCard } from "../SymptomCard";
 import Modal from "react-native-modal";
 import { Ionicons } from '@expo/vector-icons';
-import api from "./../../services/api"
+import api from "./../../services/api";
+import { SelectList } from 'react-native-dropdown-select-list';
+import { FontAwesome } from "@expo/vector-icons";
 
 export function SymptomsFeed() {
     const [userMedication, setMedication] = useState('');
     const [userReport, setUserReport] = useState('');
     const [reports, setReports] = useState([]);
+    const [medicationList, setMedicationList] = useState([]);
 
     const [isPopUpAddSymptomsVisible, setIsPopUpAddSymptomsVisible] = useState(false);
 
@@ -19,9 +22,27 @@ export function SymptomsFeed() {
 
     useEffect(() => {
         api.get('reports').then((response) => {
-            setReports(response.data);
+            setReports(response.data)
         })
     }, []);
+
+    useEffect(() => {
+        api.get('medications').then((response) => {
+            let medicationList = response.data.map((item) => {
+                return { key: item.id, value: item.nome }
+            })
+            setMedicationList(medicationList)
+        })
+    }, []);
+
+    // function findMedsName({ id }) {
+    //     api.get('medications/:id', { id }).then((response) => {
+    //         let meds = response.data.map((medications) => {
+    //             return { nome: medications.nome }
+    //         })
+    //         setReports(meds)
+    //     })
+    // }
 
     function handleAddSymptom() {
         if (!userReport.trim()) {
@@ -30,7 +51,7 @@ export function SymptomsFeed() {
         }
         else {
             const newSymptoms = {
-                medicationId: 'a3f9cc7e-422f-4518-99e6-e9c448dd6047',
+                medicationId: userMedication,
                 content: userReport,
                 userId: '56066fa6-c068-47f4-9dcf-54007c6b417b'
             };
@@ -51,7 +72,7 @@ export function SymptomsFeed() {
                     reports.map(report =>
                         <SymptomCard
                             key={report.id}
-                            medication={report.medicationId}
+                            medication={report.name}
                             date={report.createdAt.substring(0, 10)}
                             time={report.createdAt.substring(11, 16)}
                             report={report.content}
@@ -80,10 +101,15 @@ export function SymptomsFeed() {
                         </View>
                         <View style={styles.spaceTitleFields} />
                         <Text style={{ fontSize: 18 }}>Medicamento relacionado</Text>
-                        <TextInput
-                            type="text"
-                            style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
-                            onChange={e => setMedication(e.target.value)}
+                        <SelectList
+                            arrowicon={<FontAwesome name="chevron-down" size={12} color={'black'} />}
+                            searchicon={<FontAwesome name="search" size={12} color={'black'} />}
+                            placeholder="Medicamento Relacionado"
+                            setSelected={setMedication}
+                            data={medicationList}
+                            boxStyles={{ backgroundColor: '#fff', fontSize: 18 }}
+                            inputStyles={{ backgroundColor: '#fff', fontSize: 18 }}
+                            dropdownStyles={{ backgroundColor: '#fff', fontSize: 18 }}
                         />
                         <View style={styles.spaceFields} />
                         <Text style={{ fontSize: 18 }}>Relato</Text>
