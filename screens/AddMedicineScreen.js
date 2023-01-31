@@ -1,5 +1,5 @@
 import { StyleSheet, Button, TextInput } from "react-native";
-import { TouchableHighlight} from "react-native-web";
+import { TouchableHighlight} from "react-native";
 import { Text, View } from "../components/Themed";
 import { React, useState } from 'react';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';

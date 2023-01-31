@@ -1,45 +1,67 @@
 import { StyleSheet, TextInput } from "react-native";
 import { Button } from "react-native-elements";
-import { ScrollView } from "react-native-web";
+import { ScrollView } from "react-native";
 import { Text, View } from "../Themed";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SymptomCard } from "../SymptomCard";
 import Modal from "react-native-modal";
 import { Ionicons } from '@expo/vector-icons';
-import { set } from "react-native-reanimated";
+import api from "./../../services/api";
+import { SelectList } from 'react-native-dropdown-select-list';
+import { FontAwesome } from "@expo/vector-icons";
 
 export function SymptomsFeed() {
-    const [symptoms, setSymptoms] = useState([]);
     const [userMedication, setMedication] = useState('');
     const [userReport, setUserReport] = useState('');
+    const [reports, setReports] = useState([]);
+    const [medicationList, setMedicationList] = useState([]);
 
     const [isPopUpAddSymptomsVisible, setIsPopUpAddSymptomsVisible] = useState(false);
 
     const handlePopUpAddSymptoms = () => setIsPopUpAddSymptomsVisible(() => !isPopUpAddSymptomsVisible);
 
+    useEffect(() => {
+        api.get('reports').then((response) => {
+            setReports(response.data)
+        })
+    }, []);
+
+    useEffect(() => {
+        api.get('medications').then((response) => {
+            let medicationList = response.data.map((item) => {
+                return { key: item.id, value: item.nome }
+            })
+            setMedicationList(medicationList)
+        })
+    }, []);
+
+    // function findMedsName({ id }) {
+    //     api.get('medications/:id', { id }).then((response) => {
+    //         let meds = response.data.map((medications) => {
+    //             return { nome: medications.nome }
+    //         })
+    //         setReports(meds)
+    //     })
+    // }
+
     function handleAddSymptom() {
-        const checkTextInput = () => {
-            if (!userReport.trim()) {
-                alert("Espaço de Relato está vazio!");
-                return;
-            }
-            else {
-                const newSymptoms = {
-                    medication: userMedication,
-                    report: userReport,
-                    date: new Date().toLocaleDateString("pt-br"),
-                    time: new Date().toLocaleTimeString("pt-br", {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                    })
-                };
-                setSymptoms(prevState => [...prevState, newSymptoms]);
-                setMedication("");
-                setUserReport("");
-                handlePopUpAddSymptoms();
-            }
+        if (!userReport.trim()) {
+            alert("Espaço de Relato está vazio!");
+            return;
         }
-        checkTextInput();
+        else {
+            const newSymptoms = {
+                medicationId: userMedication,
+                content: userReport,
+                userId: '56066fa6-c068-47f4-9dcf-54007c6b417b'
+            };
+            api.post('reports', newSymptoms).then((response) => {
+                setReports(prevState => [...prevState, response.data]);
+            })
+            setMedication("");
+            setUserReport("");
+            handlePopUpAddSymptoms();
+        }
     }
 
     return (
@@ -47,13 +69,13 @@ export function SymptomsFeed() {
             <Text style={[styles.titleInPages]}>Histórico De{"\n"}Sintomas</Text>
             <ScrollView style={[styles.symptomsFeedScroll]}>
                 {
-                    symptoms.map(symptom =>
+                    reports.map(report =>
                         <SymptomCard
-                            key={symptom.time}
-                            medication={symptom.medication}
-                            date={symptom.date}
-                            time={symptom.time}
-                            report={symptom.report}
+                            key={report.id}
+                            medication={report.name}
+                            date={report.createdAt.substring(0, 10)}
+                            time={report.createdAt.substring(11, 16)}
+                            report={report.content}
                         />
                     )}
             </ScrollView>
@@ -64,7 +86,7 @@ export function SymptomsFeed() {
                 justifyContent: 'flex-start',
                 flexDirection: "row-reverse",
                 backgroundColor: "rgba(0, 0, 0, 0)",
-                }
+            }
             }>
                 <Button icon={<Ionicons name="checkmark-circle-outline" size={55} color="rgba(0, 255,209, 1)" />} onPress={handlePopUpAddSymptoms} type="clear" />
             </View>
@@ -79,10 +101,15 @@ export function SymptomsFeed() {
                         </View>
                         <View style={styles.spaceTitleFields} />
                         <Text style={{ fontSize: 18 }}>Medicamento relacionado</Text>
-                        <TextInput
-                            type="text"
-                            style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
-                            onChange={e => setMedication(e.target.value)}
+                        <SelectList
+                            arrowicon={<FontAwesome name="chevron-down" size={12} color={'black'} />}
+                            searchicon={<FontAwesome name="search" size={12} color={'black'} />}
+                            placeholder="Medicamento Relacionado"
+                            setSelected={setMedication}
+                            data={medicationList}
+                            boxStyles={{ backgroundColor: '#fff', fontSize: 18 }}
+                            inputStyles={{ backgroundColor: '#fff', fontSize: 18 }}
+                            dropdownStyles={{ backgroundColor: '#fff', fontSize: 18 }}
                         />
                         <View style={styles.spaceFields} />
                         <Text style={{ fontSize: 18 }}>Relato</Text>
@@ -133,10 +160,10 @@ const styles = StyleSheet.create({
         textAlign: "center",
         color: "#FFF",
         fontWeight: "bold",
-        fontFamily: 'SeoulHangang CBL',
+        //    fontFamily: 'SeoulHangang CBL',
         flex: 1,
-        paddingTop: 50,
-        paddingBottom: 20,
+        paddingTop: 30,
+        paddingBottom: 40,
 
     },
     symptomsModalBox: {
