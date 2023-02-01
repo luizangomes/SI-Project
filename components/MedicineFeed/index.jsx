@@ -1,12 +1,13 @@
-import { StyleSheet, TextInput} from "react-native";
+import { StyleSheet, TextInput } from "react-native";
 import { Button } from "react-native-elements";
 import { ScrollView } from "react-native";
 import { Text, View } from "../Themed";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MedicineCard } from "../MedicineCard";
 import Modal from "react-native-modal";
 import { Ionicons } from '@expo/vector-icons';
 import DropDownPicker from "react-native-dropdown-picker";
+import api from "./../../services/api";
 
 export function MedicineFeed() {
     const [medicine, setMedicine] = useState([]);
@@ -20,14 +21,20 @@ export function MedicineFeed() {
 
     // Opções para o menu dropdown.
     const [opcoes, setOpcoes] = useState([
-        {label: "comprimidos", value: "comprimidos"},
-        {label: "gotas", value: "gotas"},
+        { label: "comprimidos", value: "comprimidos" },
+        { label: "gotas", value: "gotas" },
     ]);
     const [aberto, setAberto] = useState(false);
 
     const [isPopUpAddMedicineVisible, setIsPopUpAddMedicineVisible] = useState(false);
 
     const handlePopUpAddMedicine = () => setIsPopUpAddMedicineVisible(() => !isPopUpAddMedicineVisible);
+
+    useEffect(() => {
+        api.get('medications').then((response) => {
+            setMedicine(response.data)
+        })
+    }, []);
 
     function handleAddMed() {
         const checkTextInput = () => {
@@ -37,6 +44,28 @@ export function MedicineFeed() {
             }
             else {
                 const newMedicine = {
+                    userId: '56066fa6-c068-47f4-9dcf-54007c6b417b',
+                    nome: nomeRemedio,
+                    tipo: unidade,
+                    quantity: parseInt(dosagem, 10),
+                    estoque: parseInt(estoque, 10),
+                    dataInicio: dataInicio,
+                    dataFim: dataFim,
+                    horario: horario,
+                };
+                /*
+                    id  String  @id @default(uuid()) @unique
+                    nome     String
+                    tipo String
+                    quantity Int
+                    estoque Int
+                    dataInicio String
+                    dataFim String
+                    horario String[]
+                    reports Report[]
+                */
+                /*
+                const newMedicine = {
                     novoNome: nomeRemedio,
                     novaDosagem: dosagem,
                     novaUnidade: unidade,
@@ -45,8 +74,11 @@ export function MedicineFeed() {
                     novaDataFim: dataFim,
                     novoHorario: horario,
                 };
-                
-                setMedicine(prevState => [...prevState, newMedicine]);
+                */
+
+                api.post('medications', newMedicine).then((response) => {
+                    setMedicine(prevState => [...prevState, response.data]);
+                })
                 setNomeRemedio("");
                 setDosagem("");
                 setUnidade("");
@@ -60,6 +92,7 @@ export function MedicineFeed() {
         checkTextInput();
     }
 
+
     return (
         <View style={{ height: '100%', alignContent: 'flex-end', justifyContent: "flex-end", flexDirection: "column", backgroundColor: "rgba(0, 0, 0, 0)" }}>
             <Text style={[styles.titleInPages]}>Histórico De{"\n"}Remédios</Text>
@@ -67,14 +100,14 @@ export function MedicineFeed() {
                 {
                     medicine.map(med =>
                         <MedicineCard
-                            key={med.novoNome}
-                            nome={med.novoNome}
-                            dose={med.novaDosagem}
-                            unidade = {med.novaUnidade}
-                            estoque={med.novoEstoque}
-                            dataInicio={med.novaDataInic}
-                            dataFim={med.novaDataFim}
-                            horario={med.novoHorario}
+                            key={med.id}
+                            nome={med.nome}
+                            dose={med.quantity}
+                            unidade={med.tipo}
+                            estoque={med.estoque}
+                            dataInicio={med.dataInicio}
+                            dataFim={med.dataFim}
+                            horario={med.horario}
                         />
                     )}
             </ScrollView>
@@ -85,85 +118,85 @@ export function MedicineFeed() {
                 justifyContent: 'flex-start',
                 flexDirection: "row-reverse",
                 backgroundColor: "rgba(0, 0, 0, 0)",
-                }
+            }
             }>
                 <Button icon={<Ionicons name="checkmark-circle-outline" size={55} color="rgba(0, 255,209, 1)" />} onPress={handlePopUpAddMedicine} type="clear" />
             </View>
             <Modal isVisible={isPopUpAddMedicineVisible} style={{ width: '100 %', height: '100%' }}>
                 <View style={styles.medicineModalBox}>
-                        <View style={{ padding: "0%", marginTop: "5%", flexDirection: "row-reverse", flex: 1, backgroundColor: "rgba(0, 0, 0, 0)" }}>
-                            <View style={{ paddingHorizontal: "0%", marginTop: "8%", width: "10%", flex: 1, flexDirection: "row-reverse", backgroundColor: "rgba(0, 0, 0, 0)" }}>
-                                <Button color="rgba(0, 0, 0, 0)" icon={<Ionicons name="close-sharp" size={40} color="white" />} onPress={handlePopUpAddMedicine} type="clear" />
-                            </View>
-                            <Text style={styles.addTitlePopUp}>Adicionar remédio</Text>
+                    <View style={{ padding: "0%", marginTop: "5%", flexDirection: "row-reverse", flex: 1, backgroundColor: "rgba(0, 0, 0, 0)" }}>
+                        <View style={{ paddingHorizontal: "0%", marginTop: "8%", width: "10%", flex: 1, flexDirection: "row-reverse", backgroundColor: "rgba(0, 0, 0, 0)" }}>
+                            <Button color="rgba(0, 0, 0, 0)" icon={<Ionicons name="close-sharp" size={40} color="white" />} onPress={handlePopUpAddMedicine} type="clear" />
                         </View>
-                        <View style={styles.spaceTitleFields} />
-                        <Text style={{ fontSize: 18 }}>Nome do remédio</Text>
-                        <TextInput
-                            type="text"
-                            style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
-                            onChange={e => setNomeRemedio(e.target.value)}
-                        />
+                        <Text style={styles.addTitlePopUp}>Adicionar remédio</Text>
+                    </View>
+                    <View style={styles.spaceTitleFields} />
+                    <Text style={{ fontSize: 18 }}>Nome do remédio</Text>
+                    <TextInput
+                        type="text"
+                        style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
+                        onChange={e => setNomeRemedio(e.target.value)}
+                    />
 
-                        <View style={styles.spaceTitleFields} />
-                        <Text style={{ fontSize: 18 }}>Dosagem</Text>
-                        <TextInput
-                            type="text"
-                            style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
-                            onChange={e => setDosagem(e.target.value)}
-                        />
+                    <View style={styles.spaceTitleFields} />
+                    <Text style={{ fontSize: 18 }}>Dosagem</Text>
+                    <TextInput
+                        type="text"
+                        style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
+                        onChange={e => setDosagem(e.target.value)}
+                    />
 
-                        <View style={styles.spaceTitleFields} />
-                        <Text style={{ fontSize: 18 }}>Estoque</Text>
-                        <View style = {{flexDirection: "row", backgroundColor: "rgba(0,0,0,0)"}}>
-                            <View style = {{flex: 0.6, backgroundColor: "rgba(0,0,0,0)"}}>
-                                <TextInput
-                                    type="text"
-                                    style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20, height: 50}}
-                                    onChange={e => setEstoque(e.target.value)}
-                                    />
-                            </View>
-                            <View style = {{flex: 0.4, backgroundColor: "rgba(0,0,0,0)",}}>
-                                <DropDownPicker
-                                    placeholder = "Unidade de medida"
-                                    value = {unidade}
-                                    open = {aberto}
-                                    items = {opcoes}
-                                    setValue = {setUnidade}
-                                    setOpen = {setAberto}
-                                    setItems = {setOpcoes}
-                                    />
-                            </View>
+                    <View style={styles.spaceTitleFields} />
+                    <Text style={{ fontSize: 18 }}>Estoque</Text>
+                    <View style={{ flexDirection: "row", backgroundColor: "rgba(0,0,0,0)" }}>
+                        <View style={{ flex: 0.6, backgroundColor: "rgba(0,0,0,0)" }}>
+                            <TextInput
+                                type="text"
+                                style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20, height: 50 }}
+                                onChange={e => setEstoque(e.target.value)}
+                            />
                         </View>
-
-                        <View style={styles.spaceTitleFields} />
-                        <Text style={{ fontSize: 18 }}>Data de início</Text>
-                        <TextInput
-                            type="text"
-                            style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
-                            onChange={e => setDataInicio(e.target.value)}
-                        />
-                        
-
-                        <View style={styles.spaceTitleFields} />
-                        <Text style={{ fontSize: 18 }}>Data fim</Text>
-                        <TextInput
-                            type="text"
-                            style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
-                            onChange={e => setDataFim(e.target.value)}
-                        />
-
-                        <View style={styles.spaceTitleFields} />
-                        <Text style={{ fontSize: 18 }}>Horários</Text>
-                        <TextInput
-                            type="text"
-                            style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
-                            onChange={e => setHorario(e.target.value)}
-                        />
-                        
-                        <View style={{ width: '100%', paddingBottom: 10, flex: 1, flexDirection: "row-reverse", backgroundColor: "rgba(0, 255, 209, 0)" }}>
-                            <Button icon={<Ionicons name="checkmark-circle-outline" size={50} color="white" />} onPress={handleAddMed} type="clear" />
+                        <View style={{ flex: 0.4, backgroundColor: "rgba(0,0,0,0)", }}>
+                            <DropDownPicker
+                                placeholder="Unidade de medida"
+                                value={unidade}
+                                open={aberto}
+                                items={opcoes}
+                                setValue={setUnidade}
+                                setOpen={setAberto}
+                                setItems={setOpcoes}
+                            />
                         </View>
+                    </View>
+
+                    <View style={styles.spaceTitleFields} />
+                    <Text style={{ fontSize: 18 }}>Data de início</Text>
+                    <TextInput
+                        type="text"
+                        style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
+                        onChange={e => setDataInicio(e.target.value)}
+                    />
+
+
+                    <View style={styles.spaceTitleFields} />
+                    <Text style={{ fontSize: 18 }}>Data fim</Text>
+                    <TextInput
+                        type="text"
+                        style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
+                        onChange={e => setDataFim(e.target.value)}
+                    />
+
+                    <View style={styles.spaceTitleFields} />
+                    <Text style={{ fontSize: 18 }}>Horários</Text>
+                    <TextInput
+                        type="text"
+                        style={{ borderRadius: 8, backgroundColor: "rgba(255, 255, 255, 0.6)", fontSize: 20 }}
+                        onChange={e => setHorario(e.target.value)}
+                    />
+
+                    <View style={{ width: '100%', paddingBottom: 10, flex: 1, flexDirection: "row-reverse", backgroundColor: "rgba(0, 255, 209, 0)" }}>
+                        <Button icon={<Ionicons name="checkmark-circle-outline" size={50} color="white" />} onPress={handleAddMed} type="clear" />
+                    </View>
                 </View >
             </Modal >
         </View >
@@ -202,10 +235,10 @@ const styles = StyleSheet.create({
         textAlign: "center",
         color: "#FFF",
         fontWeight: "bold",
-    //    fontFamily: 'SeoulHangang CBL',
+        //    fontFamily: 'SeoulHangang CBL',
         flex: 1,
-        paddingTop: 50,
-        paddingBottom: 20,
+        paddingTop: 30,
+        paddingBottom: 40,
 
     },
     medicineModalBox: {
