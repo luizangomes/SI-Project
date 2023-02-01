@@ -1,26 +1,24 @@
 {
-  "expo": {
-    "name": "siproject",
-    "slug": "expo-template-tabs",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "backgroundColor": "#ffffff"
-      }
-    },
-    "web": {
+    "expo": {
+        "name": "siproject",
+        "slug": "expo-template-tabs",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "scheme": "myapp",
+        "userInterfaceStyle": "automatic",
+        "updates": {
+            "fallbackToCacheTimeout": 0
+        },
+        "assetBundlePatterns": [
+            "**/*"
+        ],
+        "ios": {
+            "supportsTablet": true
+        },
+        "android": {
+            "adaptiveIcon": {
+                "backgroundColor": "#ffffff"
+            }
+        }
     }
-  }
 }
