@@ -35,15 +35,9 @@ export function SymptomsFeed() {
         })
     }, []);
 
-    // function findMedsName({ id }) {
-    //     api.get('medications/:id', { id }).then((response) => {
-    //         let meds = response.data.map((medications) => {
-    //             return { nome: medications.nome }
-    //         })
-    //         setReports(meds)
-    //     })
-    // }
 
+    // como vocês podem ver já temos um usuário, e este usuário no caso foi um criado no banco que está sendo usado atualmente. 
+    // Sempre quando mudar de banco muda o usuário de acordo com a necessidade.
     function handleAddSymptom() {
         if (!userReport.trim()) {
             alert("Espaço de Relato está vazio!");
@@ -53,7 +47,7 @@ export function SymptomsFeed() {
             const newSymptoms = {
                 medicationId: userMedication,
                 content: userReport,
-                userId: '56066fa6-c068-47f4-9dcf-54007c6b417b'
+                userId: '9940797e-43c0-4db6-8bab-758a16f95506'
             };
             api.post('reports', newSymptoms).then((response) => {
                 setReports(prevState => [...prevState, response.data]);
