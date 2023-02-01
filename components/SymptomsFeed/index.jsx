@@ -11,7 +11,7 @@ import { SelectList } from 'react-native-dropdown-select-list';
 import { FontAwesome } from "@expo/vector-icons";
 
 export function SymptomsFeed() {
-    const [userMedication, setMedication] = useState('');
+    const [userMedication, setMedication] = useState(null);
     const [userReport, setUserReport] = useState('');
     const [reports, setReports] = useState([]);
     const [medicationList, setMedicationList] = useState([]);
